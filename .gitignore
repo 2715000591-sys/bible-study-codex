@@ -1,0 +1,9 @@
+# Local private Bible-study history
+history/*
+!history/README.md
+
+# Local personal source preferences
+sources/*.local.md
+
+# OS/editor noise
+.DS_Store
