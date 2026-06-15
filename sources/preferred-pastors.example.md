@@ -1,6 +1,6 @@
 # 偏好牧师名单模板
 
-复制一份到 `sources/preferred-pastors.local.md`，填入你自己常看的牧师。`*.local.md` 默认不会上传 GitHub。
+默认偏好牧师见 `sources/default-preferences.md`。如果你有自己的常看牧师，复制一份到 `sources/preferred-pastors.local.md` 后填写。`*.local.md` 默认不会上传 GitHub。
 
 ## 格式
 
@@ -14,10 +14,10 @@
 ## 示例
 
 ```md
-- 牧师名字：示例名字
-  - 常看教会/机构：示例教会
-  - 常看网站或频道：https://example.com
-  - 备注：只查这个官方频道，避免同名混淆
+- 牧师名字：David Pawson / 大卫鲍森 / 大卫鲍生
+  - 常看教会/机构：David Pawson Teaching Trust 或用户指定中文频道
+  - 常看网站或频道：填你常看的中文频道链接
+  - 备注：优先中文翻译、中文字幕；来源不清楚时先确认，不要硬编总结
 ```
 
 ## 使用方式

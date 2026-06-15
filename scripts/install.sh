@@ -15,13 +15,15 @@ fi
 mkdir -p "$TARGET_ROOT"
 
 if [[ -d "$TARGET_DIR" ]]; then
-  echo "检测到已安装的 bible-study-codex，将更新文件。不会删除你的其他 Skill。"
+  echo "检测到已安装的 bible-study-codex，将更新 Skill 文件。"
+  echo "提示：只有项目更新后才需要再次运行本脚本，日常查经提问不用重复安装。"
 else
   echo "准备安装 bible-study-codex。"
+  echo "提示：这是首次安装。以后日常查经提问不用重复安装，除非项目更新。"
 fi
 
 mkdir -p "$TARGET_DIR"
 cp -R "$SOURCE_DIR/." "$TARGET_DIR/"
 
 echo "安装完成：$TARGET_DIR"
-echo "请重启 Codex，然后用：Use \$bible-study-codex ..."
+echo "请重启或刷新 Codex，然后用：Use \$bible-study-codex ..."

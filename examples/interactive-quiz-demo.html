@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>创世记1:1-5 互动选择题 Demo</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --ink: #1f2933;
+      --muted: #667085;
+      --line: #d8dee4;
+      --accent: #166d76;
+      --accent-soft: #e6f4f1;
+      --gold: #a15c07;
+      --gold-soft: #fff7e6;
+      --ok: #1f7a4d;
+      --ok-soft: #e7f7ef;
+      --bad: #b42318;
+      --bad-soft: #fff0ed;
+      --focus: #2563eb;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    main {
+      width: min(960px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 48px;
+    }
+
+    header {
+      display: grid;
+      gap: 12px;
+      padding: 24px 0 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(28px, 5vw, 44px);
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    .subhead {
+      max-width: 720px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 10px;
+      align-items: center;
+      padding: 14px 0;
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .progress-wrap {
+      min-width: 0;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .progress {
+      height: 8px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e4e7ec;
+    }
+
+    .progress span {
+      display: block;
+      width: 0;
+      height: 100%;
+      background: var(--accent);
+      transition: width 180ms ease;
+    }
+
+    button {
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--ink);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button:focus-visible,
+    label:focus-within {
+      outline: 3px solid color-mix(in srgb, var(--focus) 36%, transparent);
+      outline-offset: 2px;
+    }
+
+    .primary {
+      padding: 0 16px;
+      border-color: var(--accent);
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+    }
+
+    .secondary {
+      padding: 0 14px;
+      color: var(--muted);
+    }
+
+    .summary {
+      display: none;
+      margin: 20px 0 10px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .summary.visible {
+      display: grid;
+      gap: 6px;
+    }
+
+    .summary strong {
+      font-size: 22px;
+    }
+
+    .questions {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .question {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .question.correct {
+      border-color: color-mix(in srgb, var(--ok) 48%, var(--line));
+      background: var(--ok-soft);
+    }
+
+    .question.wrong {
+      border-color: color-mix(in srgb, var(--bad) 48%, var(--line));
+      background: var(--bad-soft);
+    }
+
+    .question.unanswered {
+      border-color: color-mix(in srgb, var(--gold) 50%, var(--line));
+      background: var(--gold-soft);
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .tier {
+      background: var(--gold-soft);
+      color: var(--gold);
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 18px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+
+    .choices {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    label {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 10px;
+      align-items: start;
+      min-height: 48px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    label:hover {
+      border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+    }
+
+    input {
+      width: 18px;
+      height: 18px;
+      margin: 3px 0 0 4px;
+      accent-color: var(--accent);
+    }
+
+    .choice-text {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .feedback {
+      display: none;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      color: var(--ink);
+    }
+
+    .checked .feedback {
+      display: block;
+    }
+
+    .feedback p {
+      margin: 6px 0;
+    }
+
+    .feedback .answer {
+      font-weight: 800;
+    }
+
+    @media (max-width: 680px) {
+      main {
+        width: min(100% - 20px, 960px);
+        padding-top: 12px;
+      }
+
+      .toolbar {
+        grid-template-columns: 1fr;
+        align-items: stretch;
+      }
+
+      .primary,
+      .secondary {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>创世记1:1-5 互动选择题 Demo</h1>
+      <p class="subhead">先读创世记开头这五节，再作答。题目只考选择，不考背诵；难度靠观察、依据和分辨逐级上升。点“检查答案”后会显示得分、错题和简短解析。</p>
+    </header>
+
+    <section class="toolbar" aria-label="测验工具栏">
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span id="answeredText">已答 0 / 8</span>
+          <span id="scoreText">未检查</span>
+        </div>
+        <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+      </div>
+      <button class="primary" id="checkButton" type="button">检查答案</button>
+      <button class="secondary" id="resetButton" type="button">重做</button>
+    </section>
+
+    <section class="summary" id="summary" aria-live="polite"></section>
+
+    <section class="questions" id="questions"></section>
+  </main>
+
+  <script>
+    const quiz = [
+      {
+        tier: "基础理解",
+        ref: "创1:1",
+        question: "创1:1最直接建立了哪一个理解基础？",
+        choices: [
+          "天地不是无主地，它们的起源与神有关",
+          "经文重点是在解释太阳和月亮的运行规律",
+          "人类已经在场，并开始管理世界",
+          "海洋先于神存在，并决定天地的秩序"
+        ],
+        answer: 0,
+        explain: "创1:1先建立天地与神的关系：起初神创造天地。答案重点在这层关系，不只是认出一个名字。"
+      },
+      {
+        tier: "结构观察",
+        ref: "创1:2",
+        question: "创1:2在创1:3“要有光”之前，主要起什么作用？",
+        choices: [
+          "说明神说话带来光之前，地处在未成形、黑暗的状态",
+          "说明城市和国家已经建立，所以需要律法管理",
+          "说明太阳已经出现，所以光只是人的感受",
+          "说明人类已经失败，所以神开始救赎历史"
+        ],
+        answer: 0,
+        explain: "创1:2铺垫的是空虚混沌、渊面黑暗，下一节神说话带来光。它帮助读者看见经文的推进。"
+      },
+      {
+        tier: "结构观察",
+        ref: "创1:3",
+        question: "在这几节里，神创造的行动首先通过什么表达出来？",
+        choices: [
+          "神说话",
+          "人开始劳动",
+          "天使修建天地",
+          "万物自己形成"
+        ],
+        answer: 0,
+        explain: "创1:3出现“神说：要有光，就有了光”。这里观察的是经文怎么推动，不是考背诵。"
+      },
+      {
+        tier: "经文依据",
+        ref: "创1:4",
+        question: "神看光之后，经文怎样评价光？",
+        choices: [
+          "光是好的",
+          "光是危险的",
+          "光还没有出现",
+          "光只属于夜晚"
+        ],
+        answer: 0,
+        explain: "创1:4说神看光是好的。答案直接来自经文。"
+      },
+      {
+        tier: "辨析判断",
+        ref: "创1:4",
+        question: "关于光和暗，哪一句更贴近经文？",
+        choices: [
+          "神把光暗分开",
+          "神把光暗混在一起",
+          "黑暗创造了光",
+          "人把光暗命名"
+        ],
+        answer: 0,
+        explain: "创1:4明确说神把光暗分开。其他选项有想象空间，但不是这段经文说的。"
+      },
+      {
+        tier: "辨析判断",
+        ref: "创1:5",
+        question: "创1:5里，神给光和暗分别起了什么名字？",
+        choices: [
+          "光称为昼，暗称为夜",
+          "光称为天，暗称为地",
+          "光称为空气，暗称为海",
+          "光称为太阳，暗称为月亮"
+        ],
+        answer: 0,
+        explain: "创1:5说神称光为昼，称暗为夜。这里有一点记忆，但仍是关键观察，不是生僻细节。"
+      },
+      {
+        tier: "应用分辨",
+        ref: "创1:1-5",
+        question: "如果把这段经文放到今天生活，哪个回应更贴近经文方向？",
+        choices: [
+          "世界有秩序和界限，我不必把混乱当成最终状态",
+          "只要我忙一点，混乱就一定会自己消失",
+          "经文主要叫人忽略现实里的黑暗",
+          "既然神创造天地，人就不需要负任何责任"
+        ],
+        answer: 0,
+        explain: "应用题不是硬性背诵，但方向要贴近经文：神在混沌黑暗中带出光、分别和秩序。"
+      },
+      {
+        tier: "综合观察",
+        ref: "创1:1-5",
+        question: "这段经文整体的推进最接近哪一项？",
+        choices: [
+          "从空虚混沌和黑暗，到神说话带出光与分别",
+          "从亚伯拉罕出发，到进入迦南",
+          "从以色列出埃及，到过红海",
+          "从耶稣受洗，到开始传道"
+        ],
+        answer: 0,
+        explain: "创1:1-5的推进是起初神创造，地的混沌黑暗，神说话有光，并把光暗分开。"
+      }
+    ];
+
+    const questionsEl = document.querySelector("#questions");
+    const summaryEl = document.querySelector("#summary");
+    const progressBar = document.querySelector("#progressBar");
+    const answeredText = document.querySelector("#answeredText");
+    const scoreText = document.querySelector("#scoreText");
+
+    function renderQuiz() {
+      questionsEl.innerHTML = quiz.map((item, index) => {
+        const choices = item.choices.map((choice, choiceIndex) => `
+          <label>
+            <input type="radio" name="q${index}" value="${choiceIndex}">
+            <span class="choice-text">${String.fromCharCode(65 + choiceIndex)}. ${choice}</span>
+          </label>
+        `).join("");
+
+        return `
+          <article class="question" id="q${index}">
+            <div class="meta">
+              <span class="pill tier">${item.tier}</span>
+              <span class="pill">${item.ref}</span>
+              <span>第 ${index + 1} 题</span>
+            </div>
+            <h2>${item.question}</h2>
+            <div class="choices">${choices}</div>
+            <div class="feedback" id="f${index}"></div>
+          </article>
+        `;
+      }).join("");
+      updateProgress();
+    }
+
+    function getSelected(index) {
+      const selected = document.querySelector(`input[name="q${index}"]:checked`);
+      return selected ? Number(selected.value) : null;
+    }
+
+    function updateProgress() {
+      const answered = quiz.filter((_, index) => getSelected(index) !== null).length;
+      answeredText.textContent = `已答 ${answered} / ${quiz.length}`;
+      progressBar.style.width = `${Math.round((answered / quiz.length) * 100)}%`;
+    }
+
+    function checkAnswers() {
+      let score = 0;
+      let unanswered = 0;
+
+      quiz.forEach((item, index) => {
+        const selected = getSelected(index);
+        const card = document.querySelector(`#q${index}`);
+        const feedback = document.querySelector(`#f${index}`);
+        card.classList.remove("correct", "wrong", "unanswered");
+        card.classList.add("checked");
+
+        if (selected === null) {
+          unanswered += 1;
+          card.classList.add("unanswered");
+          feedback.innerHTML = `
+            <p class="answer">还没作答。正确答案：${String.fromCharCode(65 + item.answer)}</p>
+            <p>${item.explain}</p>
+          `;
+          return;
+        }
+
+        if (selected === item.answer) {
+          score += 1;
+          card.classList.add("correct");
+          feedback.innerHTML = `
+            <p class="answer">答对了。正确答案：${String.fromCharCode(65 + item.answer)}</p>
+            <p>${item.explain}</p>
+          `;
+        } else {
+          card.classList.add("wrong");
+          feedback.innerHTML = `
+            <p class="answer">这题错了。你选了 ${String.fromCharCode(65 + selected)}，正确答案是 ${String.fromCharCode(65 + item.answer)}。</p>
+            <p>${item.explain}</p>
+          `;
+        }
+      });
+
+      scoreText.textContent = `得分 ${score} / ${quiz.length}`;
+      summaryEl.classList.add("visible");
+      summaryEl.innerHTML = `
+        <strong>得分：${score} / ${quiz.length}</strong>
+        <span>未作答：${unanswered} 题。错题和解析已经显示在对应题目下方。</span>
+      `;
+      summaryEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    function resetQuiz() {
+      document.querySelectorAll("input[type='radio']").forEach(input => {
+        input.checked = false;
+      });
+      document.querySelectorAll(".question").forEach(card => {
+        card.classList.remove("checked", "correct", "wrong", "unanswered");
+      });
+      document.querySelectorAll(".feedback").forEach(feedback => {
+        feedback.innerHTML = "";
+      });
+      summaryEl.classList.remove("visible");
+      summaryEl.innerHTML = "";
+      scoreText.textContent = "未检查";
+      updateProgress();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    document.addEventListener("change", event => {
+      if (event.target.matches("input[type='radio']")) {
+        updateProgress();
+      }
+    });
+
+    document.querySelector("#checkButton").addEventListener("click", checkAnswers);
+    document.querySelector("#resetButton").addEventListener("click", resetQuiz);
+
+    renderQuiz();
+  </script>
+</body>
+</html>
