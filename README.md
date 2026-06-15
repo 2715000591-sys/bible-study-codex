@@ -34,10 +34,25 @@ bash scripts/install.sh
 
 ## 给新 Codex 的一句话
 
-把下面这句话给一个完全不知道本项目的新 Codex：
+把下面这句话给一个完全不知道本项目的新 Codex。正常人这样说就可以：
 
 ```text
-请打开并部署这个公开 GitHub 项目：https://github.com/2715000591-sys/bible-study-codex 。按 README 克隆项目，运行 bash scripts/install.sh 安装 Skill，重启或刷新 Codex 后，用 $bible-study-codex 测试“创世记1章到3章”的完整查经包；安装脚本只在首次安装或项目更新后运行，日常提问不要重复安装。
+帮我安装并试用这个 Codex 查经 Skill：https://github.com/2715000591-sys/bible-study-codex
+请你打开这个 GitHub 链接，按 README 把项目下载到本地，运行安装脚本，然后用它测试“创世记1章到3章”的完整查经包。这个 Skill 只需要第一次安装，平时使用不要重复安装。
+```
+
+如果你就是正在执行这句话的 Codex，请按这个顺序做：
+
+```bash
+git clone https://github.com/2715000591-sys/bible-study-codex.git
+cd bible-study-codex
+bash scripts/install.sh
+```
+
+安装后重启或刷新 Codex，再测试：
+
+```text
+用 $bible-study-codex 帮我做创世记1章到3章的完整查经包。
 ```
 
 ## 常用方式
