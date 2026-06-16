@@ -17,12 +17,21 @@ Load only the reference needed for the current task:
 - `references/source-policy.md` for CUV lookup, web verification, citations, and uncertainty rules.
 - `references/pastor-research.md` for handling user-specified pastor names and sermon/video summaries.
 - `references/interactive-quiz.md` for HTML quiz generation, difficulty, scoring, and explanations.
+- `references/package-data.md` for the required JSON data contract and renderer command.
 
 ## Core Rules
 
 - Ask for the passage range if missing. Accept spoken ranges like `创世记1章到3章`, `罗马书8章`, `约翰福音3章16到21节`, `John 3:16-21`, or `创世记12章`.
 - Treat a passage range as enough input. Normalize the range, retrieve CUV online by default, and ask for pasted text only when lookup fails or the translation source is unclear.
 - When the user gives a passage and no narrower task, produce the default full study package: CUV text reference, pre-reading background, context, key places, needed route/geography diagram, David Pawson or specified-pastor sermon angle, reading focus, post-reading summary, cross-references, interactive HTML quiz, and short history summary.
+- For a full study package, first write structured package data to `outputs/<passage-slug>-package.json`, then render the pages with the bundled renderer. In the repository, run `python3 scripts/render-package.py --data outputs/<passage-slug>-package.json --out outputs --open`. Do not hand-write finished HTML when the renderer is available.
+- A full study package must include a user-openable HTML entry page. Do not deliver only scattered Markdown/HTML file paths. Create an entry page such as `outputs/open.html` or `outputs/<passage>/index.html` with `<meta charset="utf-8">`, a clear title, logical reading-flow index, and buttons for the full package, interactive quiz, and sources/history summary when available.
+- The full study package body must also have an HTML version such as `genesis-1-3-study-package.html`. Markdown may exist as backup, but the entry page's `打开完整查经包` button must link to the HTML page, not to `.md`.
+- All Chinese HTML pages must include `<meta charset="utf-8">` to prevent garbled text in Safari.
+- Finished pages should feel like a polished, Apple-inspired reading product: restrained colors, strong hierarchy, subtle light/shadow, tasteful motion, and a clear index. Do not rely on dense prose alone.
+- Product pages must be content-first. Put `历史背景` inside the study package body near the top, right after `经文范围与来源`. Do not put historical background only in README, notes, history summary, or external links.
+- Do not put technical user instructions in finished pages. Avoid page copy about file paths, Markdown, HTML, encodings, "test product", "how to open", or "computer beginners". Explain opening steps only in the Codex final reply when needed.
+- If the environment allows opening local files, open the entry page in the user's browser immediately after generation. On macOS, prefer Safari when available, for example `open -a Safari outputs/open.html`; otherwise use the system browser. In the final reply, say that the entry page has been opened first, then provide a clickable entry link. If opening fails, explain in plain language: `请打开 outputs/open.html，这就是入口页。`
 - Verify historical background, geography, travel/war routes, and sermon information online. Provide short source links for claims that depend on external facts.
 - Keep every answer concise. Prefer a few clear sections over long commentary.
 - For Old/New Testament echoes, cross-references, and later narrative connections, place them mainly in the post-reading output unless the user asks for them before reading.

@@ -21,6 +21,8 @@ Verify these items online before presenting them as facts:
 
 If a claim is plausible but not verified, label it `需要人工确认`.
 
+For full study packages, every external claim group must be represented in `sources` inside the package data JSON. Use source objects with `title`, `url`, `note`, and `verified`. If the URL is missing or the source is uncertain, set `verified` to `false`.
+
 ## Diagrams and images
 
 - If the passage naturally involves migration, travel, war routes, or major geographic movement, proactively include a diagram.
@@ -28,6 +30,7 @@ If a claim is plausible but not verified, label it `需要人工确认`.
 - Generate an image only when a visual map or route would genuinely help and the available model/tool can create it.
 - Every diagram or generated image must be labeled `示意图`.
 - Do not invent route arrows, place locations, battle movement, dates, or distances. If uncertain, mark `需要人工确认`.
+- For renderer output, put factual route steps in `geography_diagram.nodes`. If the exact location or route is uncertain, say so in `geography_diagram.note`.
 
 ## Citations
 

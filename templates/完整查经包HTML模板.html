@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{PASSAGE}} 完整查经包</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --panel: rgba(255, 255, 255, 0.86);
+      --panel-strong: #ffffff;
+      --ink: #111827;
+      --muted: #5f6b7a;
+      --line: rgba(17, 24, 39, 0.12);
+      --teal: #176b6b;
+      --blue: #3457d5;
+      --amber: #a86612;
+      --green-soft: rgba(23, 107, 107, 0.10);
+      --blue-soft: rgba(52, 87, 213, 0.10);
+      --amber-soft: rgba(168, 102, 18, 0.12);
+      --shadow: 0 22px 64px rgba(20, 30, 48, 0.11);
+      --soft-shadow: 0 12px 34px rgba(20, 30, 48, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(140deg, rgba(52, 87, 213, 0.10), transparent 36%),
+        linear-gradient(230deg, rgba(23, 107, 107, 0.12), transparent 42%),
+        linear-gradient(180deg, #fbfcff 0%, var(--bg) 58%, #fffaf1 100%);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      line-height: 1.68;
+    }
+
+    a { color: inherit; }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 34px 0 64px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 18px;
+      padding: clamp(28px, 5vw, 52px);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.72)),
+        linear-gradient(125deg, var(--green-soft), var(--blue-soft), var(--amber-soft));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg, transparent 0%, rgba(255, 255, 255, 0.68) 44%, transparent 68%);
+      transform: translateX(-120%);
+      animation: light-sweep 7s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      margin: 0 0 14px;
+      padding: 3px 10px;
+      border: 1px solid rgba(23, 107, 107, 0.24);
+      border-radius: 999px;
+      color: var(--teal);
+      background: rgba(23, 107, 107, 0.08);
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    h1 {
+      position: relative;
+      margin: 0;
+      max-width: 820px;
+      font-size: clamp(34px, 6vw, 68px);
+      line-height: 1.04;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      position: relative;
+      max-width: 780px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: clamp(16px, 2vw, 20px);
+    }
+
+    .top-actions {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 26px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: 0 8px 24px rgba(20, 30, 48, 0.07);
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 850;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+
+    .button.primary {
+      border-color: rgba(23, 107, 107, 0.42);
+      background: linear-gradient(135deg, #176b6b, #244ea8);
+      color: #fff;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      border-color: rgba(52, 87, 213, 0.40);
+      box-shadow: var(--soft-shadow);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .index {
+      position: sticky;
+      top: 16px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.76);
+      box-shadow: var(--soft-shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .index h2 {
+      margin: 0 0 12px;
+      font-size: 15px;
+      letter-spacing: 0;
+    }
+
+    .index a {
+      display: grid;
+      gap: 2px;
+      padding: 10px;
+      border-radius: 8px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+    }
+
+    .index a + a { margin-top: 4px; }
+
+    .index a:hover,
+    .index a.active {
+      background: rgba(23, 107, 107, 0.08);
+      color: var(--ink);
+      transform: translateX(2px);
+    }
+
+    .index small {
+      color: var(--teal);
+      font-weight: 850;
+    }
+
+    .content {
+      display: grid;
+      gap: 14px;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(18px, 3vw, 28px);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--soft-shadow);
+      backdrop-filter: blur(16px);
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 420ms ease, transform 420ms ease, border-color 220ms ease, box-shadow 220ms ease;
+    }
+
+    .card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card:hover {
+      border-color: rgba(52, 87, 213, 0.24);
+      box-shadow: 0 18px 46px rgba(20, 30, 48, 0.11);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal), var(--blue), var(--amber));
+    }
+
+    .stage {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      margin-bottom: 10px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: clamp(22px, 3vw, 30px);
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    p { margin: 8px 0; }
+    ul, ol { margin: 8px 0; padding-left: 22px; }
+    li + li { margin-top: 6px; }
+
+    .note,
+    .diagram {
+      margin-top: 12px;
+      padding: 14px;
+      border: 1px solid rgba(23, 107, 107, 0.18);
+      border-radius: 8px;
+      background: rgba(23, 107, 107, 0.08);
+      color: #124f50;
+      font-weight: 750;
+    }
+
+    .diagram {
+      display: grid;
+      gap: 10px;
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .route {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      align-items: stretch;
+    }
+
+    .route span {
+      display: grid;
+      place-items: center;
+      min-height: 58px;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-strong);
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .route span:not(:last-child)::after {
+      content: "→";
+      margin-left: 8px;
+      color: var(--teal);
+    }
+
+    @keyframes light-sweep {
+      0%, 55% { transform: translateX(-120%); opacity: 0; }
+      68% { opacity: 0.75; }
+      100% { transform: translateX(120%); opacity: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+      .card { opacity: 1; transform: none; }
+    }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .index {
+        position: static;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 6px;
+      }
+      .index h2 { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 640px) {
+      .page { width: min(100% - 20px, 1180px); padding-top: 18px; }
+      .hero { padding: 24px; }
+      .top-actions { display: grid; }
+      .button { width: 100%; }
+      .index { grid-template-columns: 1fr; }
+      .route { grid-template-columns: 1fr; }
+      .route span:not(:last-child)::after {
+        content: "↓";
+        display: block;
+        margin: 5px 0 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <p class="eyebrow">完整查经包</p>
+      <h1>{{PASSAGE}} 完整查经包</h1>
+      <p class="lead">{{SUMMARY}}</p>
+      <nav class="top-actions" aria-label="查经包主要入口">
+        <a class="button" href="{{ENTRY_HTML}}">返回入口页</a>
+        <a class="button primary" href="{{QUIZ_HTML}}">打开互动选择题</a>
+        <a class="button" href="{{SOURCES_HTML}}">查看来源</a>
+        <a class="button" href="{{HISTORY_HTML}}">查看历史摘要</a>
+      </nav>
+    </header>
+
+    <div class="layout">
+      <nav class="index" aria-label="内容索引">
+        <h2>内容索引</h2>
+        <a href="#source"><small>01 读经前</small><span>经文范围与来源</span></a>
+        <a href="#background"><small>02 读经前</small><span>历史背景</span></a>
+        <a href="#context"><small>03 读经前</small><span>上下文</span></a>
+        <a href="#geography"><small>04 读经前</small><span>人物与地理</span></a>
+        <a href="#sermon"><small>05 讲道角度</small><span>指定牧师方向</span></a>
+        <a href="#watch"><small>06 阅读中</small><span>留意的问题</span></a>
+        <a href="#summary"><small>07 读经后</small><span>短总结</span></a>
+        <a href="#echoes"><small>08 读经后</small><span>前后文呼应</span></a>
+        <a href="#quiz"><small>09 练习</small><span>互动选择题</span></a>
+        <a href="#sources"><small>10 核对</small><span>来源</span></a>
+        <a href="#history"><small>11 留存</small><span>历史短摘要</span></a>
+      </nav>
+
+      <div class="content">
+        <section class="card" id="source">
+          <span class="stage">读经前</span>
+          <h2>经文范围与来源</h2>
+          <p>{{PASSAGE_SOURCE}}</p>
+        </section>
+
+        <section class="card" id="background">
+          <span class="stage">读经前</span>
+          <h2>历史背景</h2>
+          <p>{{HISTORICAL_BACKGROUND}}</p>
+        </section>
+
+        <section class="card" id="context">
+          <span class="stage">读经前</span>
+          <h2>上下文</h2>
+          <p>{{CONTEXT}}</p>
+        </section>
+
+        <section class="card" id="geography">
+          <span class="stage">读经前</span>
+          <h2>重要人物、地名与地理关系</h2>
+          <p>{{GEOGRAPHY}}</p>
+          <div class="diagram">{{GEOGRAPHY_DIAGRAM}}</div>
+        </section>
+
+        <section class="card" id="sermon">
+          <span class="stage">讲道角度</span>
+          <h2>David Pawson / 指定牧师讲道角度</h2>
+          <p>{{SERMON_ANGLE}}</p>
+        </section>
+
+        <section class="card" id="watch">
+          <span class="stage">阅读中</span>
+          <h2>阅读时留意的问题</h2>
+          <p>{{READING_QUESTIONS}}</p>
+        </section>
+
+        <section class="card" id="summary">
+          <span class="stage">读经后</span>
+          <h2>读后短总结</h2>
+          <p>{{POST_SUMMARY}}</p>
+        </section>
+
+        <section class="card" id="echoes">
+          <span class="stage">读经后</span>
+          <h2>前后文、旧约或新约呼应</h2>
+          <p>{{CROSS_REFERENCES}}</p>
+        </section>
+
+        <section class="card" id="quiz">
+          <span class="stage">练习</span>
+          <h2>互动选择题入口</h2>
+          <p>{{QUIZ_INTRO}}</p>
+          <p><a class="button primary" href="{{QUIZ_HTML}}">打开互动选择题</a></p>
+        </section>
+
+        <section class="card" id="sources">
+          <span class="stage">核对</span>
+          <h2>来源</h2>
+          <p>{{SOURCES}}</p>
+        </section>
+
+        <section class="card" id="history">
+          <span class="stage">留存</span>
+          <h2>历史短摘要</h2>
+          <p>{{HISTORY_SUMMARY}}</p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const cards = Array.from(document.querySelectorAll('.card'));
+    const links = Array.from(document.querySelectorAll('.index a'));
+    const linkById = new Map(links.map((link) => [link.getAttribute('href').slice(1), link]));
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.12 });
+
+    const activeObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        links.forEach((link) => link.classList.remove('active'));
+        const active = linkById.get(entry.target.id);
+        if (active) active.classList.add('active');
+      });
+    }, { rootMargin: '-30% 0px -55% 0px', threshold: 0.01 });
+
+    cards.forEach((card) => {
+      revealObserver.observe(card);
+      activeObserver.observe(card);
+    });
+  </script>
+</body>
+</html>

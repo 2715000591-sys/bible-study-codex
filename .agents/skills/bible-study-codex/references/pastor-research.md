@@ -17,6 +17,14 @@ If only names are provided, search carefully and watch for same-name confusion.
 
 When no pastor is specified, search for David Pawson content related to the passage. Prefer Chinese translation, Chinese subtitles, or Chinese channels first, then English original sources when Chinese material is not clear enough.
 
+For default David Pawson research, use this search order:
+
+1. David Pawson official website resources
+2. Official or clearly labeled Chinese subtitle/audio resource
+3. David Pawson official YouTube or podcast metadata
+4. User-followed Chinese channel when the user provides or confirms it
+5. Secondary reposts only as links with a warning
+
 ## Identity checks
 
 Before summarizing, verify at least two of these when possible:
@@ -45,6 +53,7 @@ If multiple people match the same name, ask the user to choose.
 - If captions or transcript can be reliably read, summarize them.
 - If no readable content is available, provide the link and say it cannot be responsibly summarized from available text. Do not invent the sermon content.
 - If the user can export a transcript from Get笔记 or platform subtitles, ask them to paste it and then summarize.
+- In full study package JSON, put the sermon summary in `sermon_angle` and put the supporting links in `sources`.
 
 ## Output
 

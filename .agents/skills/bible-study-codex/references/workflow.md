@@ -26,7 +26,78 @@ When the user gives a passage range without a narrower task, produce this packag
 
 Keep it concise. The goal is a usable study packet, not a long commentary.
 
-## 3. Pre-reading background
+Implementation order:
+
+1. Search and verify sources for Bible text, historical/geographic claims, and preferred-pastor material.
+2. Write `outputs/<passage-slug>-package.json` using `references/package-data.md`.
+3. Run `python3 scripts/render-package.py --data outputs/<passage-slug>-package.json --out outputs --open`.
+4. Run `bash scripts/verify.sh` when the repository is available.
+5. Final reply starts with the opened entry page, then a short note about files and verification.
+
+Do not hand-write the final HTML when the renderer is available. The renderer is the stable product surface.
+
+## 3. User-openable delivery
+
+A full study package must feel like a product the user can open, not a list of engineering files. The default open target is an HTML entry page.
+
+Default output structure:
+
+- `outputs/open.html` or `outputs/<passage-slug>/index.html` as the entry page
+- `outputs/<passage-slug>-study-package.html` for the full study package body
+- `outputs/<passage-slug>-quiz.html` for the interactive multiple-choice quiz
+- `outputs/<passage-slug>-sources.html` when sources exist
+- `outputs/<passage-slug>-history-summary.html` when a short history summary exists
+- optional `.md` backups for people who know how to use them
+
+The entry page must include:
+
+- `<meta charset="utf-8">`
+- a clear title with the passage range
+- a short content-focused sentence about the passage
+- a logical reading-flow index, usually `读经前 -> 讲道角度 -> 读经后 -> 互动题`
+- a button or prominent link: `打开完整查经包`, linking to the HTML study package, not `.md`
+- a button or prominent link: `打开互动选择题`
+- a button or prominent link: `查看来源` when a separate sources page exists
+- a button or prominent link: `查看历史摘要` when a separate history summary page exists
+
+All Chinese HTML pages must include `<meta charset="utf-8">`, including entry pages, study package pages, quiz pages, sources pages, and history-summary pages. This prevents Safari from opening Chinese as garbled text.
+
+Finished product pages must be content-first:
+
+- Do not write computer-use teaching into product pages.
+- Do not explain file paths, encodings, Markdown, HTML, or how to open files inside the product pages.
+- Do not write phrases like `这是测试产品`, `请打开 outputs/open.html`, `如果你不知道怎么打开`, or `适合电脑小白`.
+- If opening guidance is needed, put it only in the Codex final reply.
+- Use a polished, Apple-inspired visual style: quiet colors, strong hierarchy, subtle shadows, light effects, tasteful motion, and generous spacing.
+- The package must not be pure prose. Add a clear content index, section anchors, and lightweight interaction such as scroll reveal or active-section highlighting when practical.
+
+The study package HTML body must use this content order:
+
+1. 标题：经文范围 + 完整查经包
+2. 经文范围与来源
+3. 历史背景
+4. 上下文
+5. 重要人物、地名、地理关系
+6. 地理示意图, when needed
+7. David Pawson / 指定牧师讲道角度
+8. 阅读时留意的问题
+9. 读后短总结
+10. 前后文、旧约或新约呼应
+11. 互动选择题入口
+12. 来源
+13. 历史短摘要
+
+`历史背景` must appear inside the study package body near the top. It is not enough to put it in README, a history file, a source note, or an external link.
+
+After generating the entry page:
+
+1. Open it in the user's browser immediately when the local environment allows it. On macOS, prefer Safari when available, for example `open -a Safari outputs/open.html`; otherwise use the system default browser.
+2. In the final reply, do not lead with scattered file paths. Start by saying the entry page has been opened. If Safari opened it, say `我已经用 Safari 打开入口页。`
+3. Then provide one clickable entry link to `index.html` or `open.html`.
+4. If the browser cannot open it, say plainly: `请打开 outputs/open.html，这就是入口页。`
+5. Mention extra file paths only after the entry link, and only if useful.
+
+## 4. Pre-reading background
 
 Output:
 
@@ -50,7 +121,7 @@ flowchart LR
 
 Only include route arrows that are supported by the passage or a cited source. Label generated maps as `示意图`.
 
-## 4. Pastor angle
+## 5. Pastor angle
 
 Place the pastor angle before the post-reading summary when a preferred pastor is available. Default preference is David Pawson / 大卫鲍森 / 大卫鲍生.
 
@@ -65,7 +136,7 @@ Output:
 
 If no readable text, subtitles, notes, or reliable summary is available, provide the link and say it cannot be responsibly summarized.
 
-## 5. Post-reading summary and interactive quiz
+## 6. Post-reading summary and interactive quiz
 
 Output:
 
@@ -73,13 +144,13 @@ Output:
 - 关键观察
 - 容易误解的地方
 - 与前后文、旧约或新约的呼应
-- HTML 互动选择题文件
+- HTML 互动选择题文件, linked from the entry page as a button
 - 错题解析规则
 - 来源
 
 Do not default to a Markdown paper. Generate a printable/static version only when the user asks.
 
-## 6. Group transcript summary
+## 7. Group transcript summary
 
 Input is usually exported from Get笔记 or another transcription tool.
 
@@ -94,7 +165,7 @@ Output:
 
 If speaker labels are missing, do not pretend to identify voices. Say that the transcript does not provide reliable speaker separation.
 
-## 7. Personalized short sharing outline
+## 8. Personalized short sharing outline
 
 Before drafting, ask for 2-4 short user inputs when missing:
 
@@ -105,7 +176,7 @@ Before drafting, ask for 2-4 short user inputs when missing:
 
 Then output 3-5 points. Each point should be easy to remember and speak naturally.
 
-## 8. Local history
+## 9. Local history
 
 Use `templates/查经历史记录.md` when the repository is available. Save a short private summary under `history/` by default when the workflow requests history.
 

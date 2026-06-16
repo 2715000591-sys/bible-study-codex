@@ -8,6 +8,7 @@ Generate an interactive HTML multiple-choice quiz by default for full study pack
 - Use 7-10 questions.
 - Use only multiple-choice questions.
 - Do not default to a Markdown paper. Make a printable/static version only when asked.
+- For full study packages, put quiz data in `outputs/<passage-slug>-package.json` and let `scripts/render-package.py` generate the HTML.
 
 ## Difficulty
 
@@ -30,6 +31,15 @@ Do not raise difficulty through:
 - asking people to recite phrases from memory
 
 Avoid childish questions such as "who created the heavens and earth" when the passage wording gives it away too directly. Prefer questions that ask what the verse establishes, how one verse prepares the next, or which summary best fits the passage.
+
+Hard quality gates:
+
+- Every question must have exactly 4 choices.
+- Use at least 4 tiers across the quiz.
+- Do not use lazy choices such as `以上皆是`, `以上都对`, `以上都不对`, or `无法判断`.
+- Distractors must be plausible enough to test reading, but clearly wrong from the passage.
+- Do not score a question if the correct answer depends on a disputed interpretation or a denominational preference.
+- Every explanation must say what the passage basically says and why the correct answer follows.
 
 ## Question mix
 

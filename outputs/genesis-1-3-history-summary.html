@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>创世记1章到3章 历史短摘要</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --panel: rgba(255, 255, 255, 0.86);
+      --panel-strong: #ffffff;
+      --ink: #111827;
+      --muted: #5f6b7a;
+      --line: rgba(17, 24, 39, 0.12);
+      --teal: #176b6b;
+      --blue: #3457d5;
+      --amber: #a86612;
+      --ok: #1f7a4d;
+      --ok-soft: #e7f7ef;
+      --bad: #b42318;
+      --bad-soft: #fff0ed;
+      --gold: #a15c07;
+      --gold-soft: #fff7e6;
+      --green-soft: rgba(23, 107, 107, 0.10);
+      --blue-soft: rgba(52, 87, 213, 0.10);
+      --amber-soft: rgba(168, 102, 18, 0.12);
+      --shadow: 0 22px 64px rgba(20, 30, 48, 0.11);
+      --soft-shadow: 0 12px 34px rgba(20, 30, 48, 0.08);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        linear-gradient(140deg, rgba(52, 87, 213, 0.10), transparent 36%),
+        linear-gradient(230deg, rgba(23, 107, 107, 0.12), transparent 42%),
+        linear-gradient(180deg, #fbfcff 0%, var(--bg) 58%, #fffaf1 100%);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      line-height: 1.66;
+    }
+    a { color: inherit; }
+    .page { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 34px 0 64px; }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 18px;
+      padding: clamp(28px, 5vw, 52px);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.72)),
+        linear-gradient(125deg, var(--green-soft), var(--blue-soft), var(--amber-soft));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg, transparent 0%, rgba(255, 255, 255, 0.68) 44%, transparent 68%);
+      transform: translateX(-120%);
+      animation: light-sweep 7s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .eyebrow {
+      display: inline-flex;
+      min-height: 28px;
+      margin: 0 0 14px;
+      padding: 3px 10px;
+      border: 1px solid rgba(23, 107, 107, 0.24);
+      border-radius: 999px;
+      color: var(--teal);
+      background: rgba(23, 107, 107, 0.08);
+      font-size: 13px;
+      font-weight: 850;
+    }
+    h1 { position: relative; margin: 0; max-width: 840px; font-size: clamp(34px, 6vw, 68px); line-height: 1.04; letter-spacing: 0; }
+    h2 { margin: 0 0 10px; font-size: clamp(22px, 3vw, 30px); line-height: 1.2; letter-spacing: 0; }
+    h3 { margin: 0 0 8px; font-size: 18px; letter-spacing: 0; }
+    p { margin: 8px 0; }
+    ul, ol { margin: 8px 0; padding-left: 22px; }
+    li + li { margin-top: 6px; }
+    .lead { position: relative; max-width: 780px; margin: 18px 0 0; color: var(--muted); font-size: clamp(16px, 2vw, 20px); }
+    .actions { position: relative; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+    .button, button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: 0 8px 24px rgba(20, 30, 48, 0.07);
+      color: var(--ink);
+      text-decoration: none;
+      font: inherit;
+      font-weight: 850;
+      cursor: pointer;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+    .button.primary, button.primary { border-color: rgba(23, 107, 107, 0.42); background: linear-gradient(135deg, #176b6b, #244ea8); color: #fff; }
+    .button:hover, button:hover { transform: translateY(-2px); border-color: rgba(52, 87, 213, 0.40); box-shadow: var(--soft-shadow); }
+    .flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 18px; }
+    .layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 18px; align-items: start; }
+    .index {
+      position: sticky;
+      top: 16px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.76);
+      box-shadow: var(--soft-shadow);
+      backdrop-filter: blur(16px);
+    }
+    .index h2 { margin: 0 0 12px; font-size: 15px; }
+    .index a { display: grid; gap: 2px; padding: 10px; border-radius: 8px; color: var(--muted); text-decoration: none; transition: background 160ms ease, color 160ms ease, transform 160ms ease; }
+    .index a + a { margin-top: 4px; }
+    .index a:hover, .index a.active { background: rgba(23, 107, 107, 0.08); color: var(--ink); transform: translateX(2px); }
+    .index small { color: var(--teal); font-weight: 850; }
+    .content, .questions { display: grid; gap: 14px; }
+    .card, .step, .question, .summary {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(18px, 3vw, 28px);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--soft-shadow);
+      backdrop-filter: blur(16px);
+    }
+    .card { opacity: 0; transform: translateY(14px); transition: opacity 420ms ease, transform 420ms ease, border-color 220ms ease, box-shadow 220ms ease; }
+    .card.visible { opacity: 1; transform: translateY(0); }
+    .card:hover, .question:hover { border-color: rgba(52, 87, 213, 0.24); box-shadow: 0 18px 46px rgba(20, 30, 48, 0.11); }
+    .card::before, .step::before { content: ""; position: absolute; inset: 0 0 auto; height: 3px; background: linear-gradient(90deg, var(--teal), var(--blue), var(--amber)); }
+    .stage, .pill, .source-status {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      margin: 0 6px 6px 0;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 850;
+    }
+    .source-status { margin-left: 8px; color: var(--teal); background: var(--green-soft); }
+    .note, .diagram {
+      margin-top: 12px;
+      padding: 14px;
+      border: 1px solid rgba(23, 107, 107, 0.18);
+      border-radius: 8px;
+      background: rgba(23, 107, 107, 0.08);
+      color: #124f50;
+      font-weight: 750;
+    }
+    .diagram { display: grid; gap: 10px; color: var(--ink); font-weight: 700; }
+    .route { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; align-items: stretch; }
+    .route span { display: grid; place-items: center; min-height: 58px; padding: 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel-strong); text-align: center; font-size: 14px; }
+    .route span:not(:last-child)::after { content: "→"; margin-left: 8px; color: var(--teal); }
+    .toolbar { position: sticky; top: 0; z-index: 2; display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: center; padding: 14px 0; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+    .progress-label { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); font-size: 13px; margin-bottom: 6px; }
+    .progress { height: 8px; overflow: hidden; border-radius: 999px; background: #e4e7ec; }
+    .progress span { display: block; width: 0; height: 100%; background: var(--teal); transition: width 180ms ease; }
+    .choices { display: grid; gap: 8px; margin-top: 12px; }
+    label { display: grid; grid-template-columns: 32px 1fr; gap: 10px; align-items: start; min-height: 48px; padding: 12px; border: 1px solid var(--line); border-radius: 8px; background: rgba(255, 255, 255, 0.86); cursor: pointer; transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease; }
+    label:hover { transform: translateY(-1px); border-color: rgba(23, 107, 107, 0.28); box-shadow: 0 8px 22px rgba(20, 30, 48, 0.07); }
+    input { width: 18px; height: 18px; margin: 3px 0 0 4px; accent-color: var(--teal); }
+    .feedback { display: none; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+    .checked .feedback { display: block; }
+    .answer { font-weight: 850; }
+    .summary { display: none; margin: 20px 0 10px; }
+    .summary.visible { display: grid; gap: 6px; }
+    .question.correct { border-color: color-mix(in srgb, var(--ok) 48%, var(--line)); background: var(--ok-soft); }
+    .question.wrong { border-color: color-mix(in srgb, var(--bad) 48%, var(--line)); background: var(--bad-soft); }
+    .question.unanswered { border-color: color-mix(in srgb, var(--gold) 50%, var(--line)); background: var(--gold-soft); }
+    @keyframes light-sweep { 0%, 55% { transform: translateX(-120%); opacity: 0; } 68% { opacity: 0.75; } 100% { transform: translateX(120%); opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+      .card { opacity: 1; transform: none; }
+    }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .index { position: static; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+      .index h2 { grid-column: 1 / -1; }
+      .flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 640px) {
+      .page { width: min(100% - 20px, 1180px); padding-top: 18px; }
+      .hero { padding: 24px; }
+      .actions, .toolbar, .index, .flow, .route { display: grid; grid-template-columns: 1fr; }
+      .button, button { width: 100%; }
+      .route span:not(:last-child)::after { content: "↓"; display: block; margin: 5px 0 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="page">
+    <header class="hero">
+      <p class="eyebrow">历史短摘要</p>
+      <h1>创世记1章到3章 历史短摘要</h1>
+      <nav class="actions" aria-label="辅助页面导航">
+        <a class="button" href="open.html">返回入口页</a>
+        <a class="button" href="genesis-1-3-study-package.html">打开完整查经包</a>
+        <a class="button" href="genesis-1-3-quiz.html">打开互动选择题</a>
+      </nav>
+    </header>
+    <section class="card visible"><ul>
+<li>日期：2026-06-16</li>
+<li>经文：创世记1章到3章</li>
+<li>本次重点：创造秩序、人的身份与界限、试探和堕落。</li>
+<li>牧师讲道角度：David Pawson 的中文音频和字幕资源可作为整卷框架参考，具体细节需要继续以可读取内容核对。</li>
+<li>下次继续查：创世记3:15 与后续救赎线索。</li>
+</ul></section>
+  </main>
+
+
+</body>
+</html>

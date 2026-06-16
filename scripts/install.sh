@@ -6,6 +6,8 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 SOURCE_DIR="$REPO_ROOT/.agents/skills/bible-study-codex"
 TARGET_ROOT="${CODEX_SKILLS_DIR:-$HOME/.agents/skills}"
 TARGET_DIR="$TARGET_ROOT/bible-study-codex"
+SOURCE_VERSION="$(cat "$SOURCE_DIR/VERSION" 2>/dev/null || echo "unknown")"
+TARGET_VERSION="$(cat "$TARGET_DIR/VERSION" 2>/dev/null || echo "none")"
 
 if [[ ! -d "$SOURCE_DIR" ]]; then
   echo "找不到 Skill 源目录：$SOURCE_DIR"
@@ -15,10 +17,15 @@ fi
 mkdir -p "$TARGET_ROOT"
 
 if [[ -d "$TARGET_DIR" ]]; then
-  echo "检测到已安装的 bible-study-codex，将更新 Skill 文件。"
+  if [[ "$TARGET_VERSION" == "$SOURCE_VERSION" ]]; then
+    echo "检测到已安装的 bible-study-codex，版本 ${TARGET_VERSION}。"
+    echo "将刷新 Skill 文件，确保本地内容和项目一致。"
+  else
+    echo "检测到已安装的 bible-study-codex，当前版本 ${TARGET_VERSION}，将更新到 ${SOURCE_VERSION}。"
+  fi
   echo "提示：只有项目更新后才需要再次运行本脚本，日常查经提问不用重复安装。"
 else
-  echo "准备安装 bible-study-codex。"
+  echo "准备安装 bible-study-codex，版本 ${SOURCE_VERSION}。"
   echo "提示：这是首次安装。以后日常查经提问不用重复安装，除非项目更新。"
 fi
 
@@ -26,4 +33,5 @@ mkdir -p "$TARGET_DIR"
 cp -R "$SOURCE_DIR/." "$TARGET_DIR/"
 
 echo "安装完成：$TARGET_DIR"
+echo "版本：${SOURCE_VERSION}"
 echo "请重启或刷新 Codex，然后用：Use \$bible-study-codex ..."

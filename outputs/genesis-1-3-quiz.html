@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>创世记1章到3章 互动选择题</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --panel: rgba(255, 255, 255, 0.86);
+      --panel-strong: #ffffff;
+      --ink: #111827;
+      --muted: #5f6b7a;
+      --line: rgba(17, 24, 39, 0.12);
+      --teal: #176b6b;
+      --blue: #3457d5;
+      --amber: #a86612;
+      --ok: #1f7a4d;
+      --ok-soft: #e7f7ef;
+      --bad: #b42318;
+      --bad-soft: #fff0ed;
+      --gold: #a15c07;
+      --gold-soft: #fff7e6;
+      --green-soft: rgba(23, 107, 107, 0.10);
+      --blue-soft: rgba(52, 87, 213, 0.10);
+      --amber-soft: rgba(168, 102, 18, 0.12);
+      --shadow: 0 22px 64px rgba(20, 30, 48, 0.11);
+      --soft-shadow: 0 12px 34px rgba(20, 30, 48, 0.08);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        linear-gradient(140deg, rgba(52, 87, 213, 0.10), transparent 36%),
+        linear-gradient(230deg, rgba(23, 107, 107, 0.12), transparent 42%),
+        linear-gradient(180deg, #fbfcff 0%, var(--bg) 58%, #fffaf1 100%);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      line-height: 1.66;
+    }
+    a { color: inherit; }
+    .page { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 34px 0 64px; }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 18px;
+      padding: clamp(28px, 5vw, 52px);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.72)),
+        linear-gradient(125deg, var(--green-soft), var(--blue-soft), var(--amber-soft));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg, transparent 0%, rgba(255, 255, 255, 0.68) 44%, transparent 68%);
+      transform: translateX(-120%);
+      animation: light-sweep 7s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .eyebrow {
+      display: inline-flex;
+      min-height: 28px;
+      margin: 0 0 14px;
+      padding: 3px 10px;
+      border: 1px solid rgba(23, 107, 107, 0.24);
+      border-radius: 999px;
+      color: var(--teal);
+      background: rgba(23, 107, 107, 0.08);
+      font-size: 13px;
+      font-weight: 850;
+    }
+    h1 { position: relative; margin: 0; max-width: 840px; font-size: clamp(34px, 6vw, 68px); line-height: 1.04; letter-spacing: 0; }
+    h2 { margin: 0 0 10px; font-size: clamp(22px, 3vw, 30px); line-height: 1.2; letter-spacing: 0; }
+    h3 { margin: 0 0 8px; font-size: 18px; letter-spacing: 0; }
+    p { margin: 8px 0; }
+    ul, ol { margin: 8px 0; padding-left: 22px; }
+    li + li { margin-top: 6px; }
+    .lead { position: relative; max-width: 780px; margin: 18px 0 0; color: var(--muted); font-size: clamp(16px, 2vw, 20px); }
+    .actions { position: relative; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+    .button, button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: 0 8px 24px rgba(20, 30, 48, 0.07);
+      color: var(--ink);
+      text-decoration: none;
+      font: inherit;
+      font-weight: 850;
+      cursor: pointer;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+    .button.primary, button.primary { border-color: rgba(23, 107, 107, 0.42); background: linear-gradient(135deg, #176b6b, #244ea8); color: #fff; }
+    .button:hover, button:hover { transform: translateY(-2px); border-color: rgba(52, 87, 213, 0.40); box-shadow: var(--soft-shadow); }
+    .flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 18px; }
+    .layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 18px; align-items: start; }
+    .index {
+      position: sticky;
+      top: 16px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.76);
+      box-shadow: var(--soft-shadow);
+      backdrop-filter: blur(16px);
+    }
+    .index h2 { margin: 0 0 12px; font-size: 15px; }
+    .index a { display: grid; gap: 2px; padding: 10px; border-radius: 8px; color: var(--muted); text-decoration: none; transition: background 160ms ease, color 160ms ease, transform 160ms ease; }
+    .index a + a { margin-top: 4px; }
+    .index a:hover, .index a.active { background: rgba(23, 107, 107, 0.08); color: var(--ink); transform: translateX(2px); }
+    .index small { color: var(--teal); font-weight: 850; }
+    .content, .questions { display: grid; gap: 14px; }
+    .card, .step, .question, .summary {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(18px, 3vw, 28px);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--soft-shadow);
+      backdrop-filter: blur(16px);
+    }
+    .card { opacity: 0; transform: translateY(14px); transition: opacity 420ms ease, transform 420ms ease, border-color 220ms ease, box-shadow 220ms ease; }
+    .card.visible { opacity: 1; transform: translateY(0); }
+    .card:hover, .question:hover { border-color: rgba(52, 87, 213, 0.24); box-shadow: 0 18px 46px rgba(20, 30, 48, 0.11); }
+    .card::before, .step::before { content: ""; position: absolute; inset: 0 0 auto; height: 3px; background: linear-gradient(90deg, var(--teal), var(--blue), var(--amber)); }
+    .stage, .pill, .source-status {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      margin: 0 6px 6px 0;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 850;
+    }
+    .source-status { margin-left: 8px; color: var(--teal); background: var(--green-soft); }
+    .note, .diagram {
+      margin-top: 12px;
+      padding: 14px;
+      border: 1px solid rgba(23, 107, 107, 0.18);
+      border-radius: 8px;
+      background: rgba(23, 107, 107, 0.08);
+      color: #124f50;
+      font-weight: 750;
+    }
+    .diagram { display: grid; gap: 10px; color: var(--ink); font-weight: 700; }
+    .route { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; align-items: stretch; }
+    .route span { display: grid; place-items: center; min-height: 58px; padding: 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel-strong); text-align: center; font-size: 14px; }
+    .route span:not(:last-child)::after { content: "→"; margin-left: 8px; color: var(--teal); }
+    .toolbar { position: sticky; top: 0; z-index: 2; display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: center; padding: 14px 0; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+    .progress-label { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); font-size: 13px; margin-bottom: 6px; }
+    .progress { height: 8px; overflow: hidden; border-radius: 999px; background: #e4e7ec; }
+    .progress span { display: block; width: 0; height: 100%; background: var(--teal); transition: width 180ms ease; }
+    .choices { display: grid; gap: 8px; margin-top: 12px; }
+    label { display: grid; grid-template-columns: 32px 1fr; gap: 10px; align-items: start; min-height: 48px; padding: 12px; border: 1px solid var(--line); border-radius: 8px; background: rgba(255, 255, 255, 0.86); cursor: pointer; transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease; }
+    label:hover { transform: translateY(-1px); border-color: rgba(23, 107, 107, 0.28); box-shadow: 0 8px 22px rgba(20, 30, 48, 0.07); }
+    input { width: 18px; height: 18px; margin: 3px 0 0 4px; accent-color: var(--teal); }
+    .feedback { display: none; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+    .checked .feedback { display: block; }
+    .answer { font-weight: 850; }
+    .summary { display: none; margin: 20px 0 10px; }
+    .summary.visible { display: grid; gap: 6px; }
+    .question.correct { border-color: color-mix(in srgb, var(--ok) 48%, var(--line)); background: var(--ok-soft); }
+    .question.wrong { border-color: color-mix(in srgb, var(--bad) 48%, var(--line)); background: var(--bad-soft); }
+    .question.unanswered { border-color: color-mix(in srgb, var(--gold) 50%, var(--line)); background: var(--gold-soft); }
+    @keyframes light-sweep { 0%, 55% { transform: translateX(-120%); opacity: 0; } 68% { opacity: 0.75; } 100% { transform: translateX(120%); opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+      .card { opacity: 1; transform: none; }
+    }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .index { position: static; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+      .index h2 { grid-column: 1 / -1; }
+      .flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 640px) {
+      .page { width: min(100% - 20px, 1180px); padding-top: 18px; }
+      .hero { padding: 24px; }
+      .actions, .toolbar, .index, .flow, .route { display: grid; grid-template-columns: 1fr; }
+      .button, button { width: 100%; }
+      .route span:not(:last-child)::after { content: "↓"; display: block; margin: 5px 0 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="page">
+    <header class="hero">
+      <p class="eyebrow">互动选择题</p>
+      <h1>创世记1章到3章 互动选择题</h1>
+      <p class="lead">只做选择题，不考背诵。点“检查答案”后会显示得分、错题、正确答案和经文大意解析。</p>
+      <nav class="actions" aria-label="返回查经包">
+        <a class="button" href="open.html">返回入口页</a>
+        <a class="button" href="genesis-1-3-study-package.html">打开完整查经包</a>
+      </nav>
+    </header>
+    <section class="toolbar" aria-label="测验工具栏">
+      <div>
+        <div class="progress-label">
+          <span id="answeredText">已答 0 / 0</span>
+          <span id="scoreText">未检查</span>
+        </div>
+        <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+      </div>
+      <button class="primary" id="checkButton" type="button">检查答案</button>
+      <button id="resetButton" type="button">重做</button>
+    </section>
+    <section class="summary" id="summary" aria-live="polite"></section>
+    <section class="questions" id="questions"></section>
+  </main>
+
+
+  <script>
+    const quiz = [{"tier": "结构观察", "ref": "创1-2", "question": "创世记1章和2章放在一起看，哪一项最能说明它们的关系？", "choices": ["1章给宏观创造秩序，2章把镜头拉近到人和园子", "1章和2章在讲两个完全无关的世界", "1章只讲亚伯拉罕，2章只讲摩西", "1章主要讲战争路线，2章主要讲王国制度"], "answer": 0, "explain": "创1章按创造秩序展开，创2章聚焦人、园子和命令。原文不是跳到另一个故事，而是把镜头拉近。"}, {"tier": "经文依据", "ref": "创1:26-28", "question": "关于人的身份，哪一项最贴近创世记1章？", "choices": ["人只是自然界里没有特别责任的生物", "人按神的形象被造，并被托付管理受造界", "人一开始就被描写成离开神的人", "人主要任务是逃离物质世界"], "answer": 1, "explain": "创1:26-28把人的尊贵和责任连在一起。原文大意是：人有神所赐的身份，也有被托付的使命。"}, {"tier": "辨析判断", "ref": "创2:16-17", "question": "关于园中的命令，哪一句更贴近经文？", "choices": ["神没有给人任何界限和吩咐", "神只给限制，完全没有给供应", "神给人丰富供应，也给出清楚界限", "园中命令主要是蛇主动给人的"], "answer": 2, "explain": "创2:16-17先说园中各样树上的果子可以随意吃，再说分别善恶树不可吃。原文同时有供应和界限。"}, {"tier": "结构观察", "ref": "创3:1", "question": "蛇的第一句话主要改变了人怎样理解神的话？", "choices": ["把神慷慨的命令说成好像神什么都不许", "直接承认神的话完全可靠可信", "提醒人应该马上悔改并回到神面前", "解释伊甸园具体地理位置在哪里"], "answer": 0, "explain": "蛇说“神岂是真说不许你们吃园中所有树上的果子吗？”这把神的供应扭成了全面禁止。"}, {"tier": "经文依据", "ref": "创3:6-7", "question": "人吃了果子后，最先出现的结果是哪一项？", "choices": ["他们马上成为完全自由的人", "他们眼睛明亮，却开始看见自己的赤身露体并遮盖", "他们立刻回到生命树那里", "他们马上离开神创造的世界"], "answer": 1, "explain": "创3:7说他们眼睛明亮，知道自己赤身露体，就编叶子遮盖。原文显示罪带来羞耻和遮掩。"}, {"tier": "辨析判断", "ref": "创3:8-13", "question": "神询问人之后，人的回应显出什么状态？", "choices": ["人马上坦白承担自己的责任", "人开始害怕、躲藏，并把责任推给别人", "人完全没有意识到任何问题", "人已经靠自己完全胜过蛇"], "answer": 1, "explain": "创3:8-13出现躲藏、害怕、推给女人、推给蛇。原文大意是关系破裂后，人不再坦然面对神和彼此。"}, {"tier": "应用分辨", "ref": "创1-3", "question": "如果把这三章放到今天生活，哪一个回应更贴近经文方向？", "choices": ["把所有界限都看成压迫和敌意", "把失败藏起来，只要别人不知道就好", "承认神给人的身份、供应和界限，也诚实面对自己的遮掩", "只讨论创造细节，完全不碰自己的信任和顺服"], "answer": 2, "explain": "创1-3不只给知识点，也让人看见身份、界限、信任、遮掩和破裂。应用要贴近这些方向。"}, {"tier": "综合观察", "ref": "创1-3", "question": "哪一项最能概括创世记1章到3章的推进？", "choices": ["从神创造美好秩序，到人违命带来关系破裂，同时留下盼望线索", "从以色列出埃及，到进入旷野并领受律法", "从大卫正式作王，到所罗门开始建殿", "从耶稣降生，到保罗开始向外邦宣教"], "answer": 0, "explain": "这三章从创造和安置开始，到试探、违命、审判和离开园子。原文同时保留神继续说话和寻找人的线索。"}];
+    const questionsEl = document.querySelector("#questions");
+    const summaryEl = document.querySelector("#summary");
+    const progressBar = document.querySelector("#progressBar");
+    const answeredText = document.querySelector("#answeredText");
+    const scoreText = document.querySelector("#scoreText");
+    function renderQuiz() {
+      questionsEl.innerHTML = quiz.map((item, index) => {
+        const choices = item.choices.map((choice, choiceIndex) => `
+          <label>
+            <input type="radio" name="q${index}" value="${choiceIndex}">
+            <span>${String.fromCharCode(65 + choiceIndex)}. ${choice}</span>
+          </label>
+        `).join("");
+        return `
+          <article class="question" id="q${index}">
+            <div>
+              <span class="pill">${item.tier}</span>
+              <span class="pill">${item.ref}</span>
+              <span class="pill">第 ${index + 1} 题</span>
+            </div>
+            <h2>${item.question}</h2>
+            <div class="choices">${choices}</div>
+            <div class="feedback" id="f${index}"></div>
+          </article>
+        `;
+      }).join("");
+      updateProgress();
+    }
+    function getSelected(index) {
+      const selected = document.querySelector(`input[name="q${index}"]:checked`);
+      return selected ? Number(selected.value) : null;
+    }
+    function updateProgress() {
+      const answered = quiz.filter((_, index) => getSelected(index) !== null).length;
+      answeredText.textContent = `已答 ${answered} / ${quiz.length}`;
+      progressBar.style.width = `${Math.round((answered / quiz.length) * 100)}%`;
+    }
+    function checkAnswers() {
+      let score = 0;
+      let unanswered = 0;
+      quiz.forEach((item, index) => {
+        const selected = getSelected(index);
+        const card = document.querySelector(`#q${index}`);
+        const feedback = document.querySelector(`#f${index}`);
+        card.classList.remove("correct", "wrong", "unanswered");
+        card.classList.add("checked");
+        if (selected === null) {
+          unanswered += 1;
+          card.classList.add("unanswered");
+          feedback.innerHTML = `<p class="answer">还没作答。正确答案：${String.fromCharCode(65 + item.answer)}</p><p>${item.explain}</p>`;
+          return;
+        }
+        if (selected === item.answer) {
+          score += 1;
+          card.classList.add("correct");
+          feedback.innerHTML = `<p class="answer">答对了。正确答案：${String.fromCharCode(65 + item.answer)}</p><p>${item.explain}</p>`;
+        } else {
+          card.classList.add("wrong");
+          feedback.innerHTML = `<p class="answer">这题错了。你选了 ${String.fromCharCode(65 + selected)}，正确答案是 ${String.fromCharCode(65 + item.answer)}。</p><p>${item.explain}</p>`;
+        }
+      });
+      scoreText.textContent = `得分 ${score} / ${quiz.length}`;
+      summaryEl.classList.add("visible");
+      summaryEl.innerHTML = `<strong>得分：${score} / ${quiz.length}</strong><span>未作答：${unanswered} 题。错题和解析已经显示在对应题目下方。</span>`;
+      summaryEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+    function resetQuiz() {
+      document.querySelectorAll("input[type='radio']").forEach((input) => { input.checked = false; });
+      document.querySelectorAll(".question").forEach((card) => { card.classList.remove("checked", "correct", "wrong", "unanswered"); });
+      document.querySelectorAll(".feedback").forEach((feedback) => { feedback.innerHTML = ""; });
+      summaryEl.classList.remove("visible");
+      summaryEl.innerHTML = "";
+      scoreText.textContent = "未检查";
+      updateProgress();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    document.addEventListener("change", (event) => {
+      if (event.target.matches("input[type='radio']")) updateProgress();
+    });
+    document.querySelector("#checkButton").addEventListener("click", checkAnswers);
+    document.querySelector("#resetButton").addEventListener("click", resetQuiz);
+    renderQuiz();
+  </script>
+
+</body>
+</html>
