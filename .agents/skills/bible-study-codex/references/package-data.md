@@ -72,8 +72,10 @@ Rules:
 
 - Use 7-10 questions.
 - Use exactly 4 choices.
-- Use at least 4 tiers across the quiz, such as `结构观察`, `经文依据`, `辨析判断`, `应用分辨`, `综合观察`.
+- Use at least 4 deeper tiers across the quiz. Preferred tiers: `结构观察`, `经文依据`, `关系辨析`, `主题理解`, `应用分辨`, `整段综合`.
+- Use at most 1 simple warm-up/fact question. Do not begin with several giveaway questions.
 - Do not use lazy choices like `以上皆是`, `以上都对`, `以上都不对`, or `无法判断`.
+- Distractors should be plausible mistakes, not joke options or obviously unrelated Bible scenes.
 - Explanations must say what the passage basically says, not only that the selected answer is wrong.
 
 ## Output files

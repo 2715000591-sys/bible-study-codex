@@ -27,6 +27,19 @@ FORBIDDEN_PAGE_TEXT = [
 ]
 
 FORBIDDEN_QUIZ_CHOICES = ["以上皆是", "以上都对", "以上都不对", "无法判断"]
+PREFERRED_QUIZ_TIERS = {
+    "结构观察",
+    "经文依据",
+    "关系辨析",
+    "主题理解",
+    "应用分辨",
+    "整段综合",
+}
+QUIZ_TIER_ALIASES = {
+    "辨析判断": "关系辨析",
+    "综合观察": "整段综合",
+}
+SIMPLE_QUIZ_TIERS = {"基础理解", "热身事实", "事实回忆", "记忆题"}
 
 
 class PackageError(Exception):
@@ -181,9 +194,20 @@ def validate_package(data: dict[str, Any]) -> None:
     quiz = normalize_quiz(data)
     if not (7 <= len(quiz) <= 10):
         raise PackageError("互动选择题必须是 7 到 10 题。")
-    tiers = {str(item.get("tier", "")).strip() for item in quiz}
-    if len(tiers) < 4:
-        raise PackageError("互动题至少需要 4 种层级，例如结构观察、经文依据、辨析判断、应用分辨、综合观察。")
+    tiers = set()
+    simple_tier_count = 0
+    for item in quiz:
+        raw_tier = str(item.get("tier", "")).strip()
+        tier = QUIZ_TIER_ALIASES.get(raw_tier, raw_tier)
+        item["tier"] = tier
+        tiers.add(tier)
+        if tier in SIMPLE_QUIZ_TIERS:
+            simple_tier_count += 1
+    deep_tiers = tiers & PREFERRED_QUIZ_TIERS
+    if len(deep_tiers) < 4:
+        raise PackageError("互动题至少需要 4 种较深层级，例如结构观察、经文依据、关系辨析、主题理解、应用分辨、整段综合。")
+    if simple_tier_count > 1:
+        raise PackageError("互动题最多只能有 1 题简单热身或事实回忆，不能连续出送分题。")
     for index, item in enumerate(quiz, start=1):
         choices = item["choices"]
         if len(choices) != 4:
@@ -194,11 +218,11 @@ def validate_package(data: dict[str, Any]) -> None:
             raise PackageError(f"第 {index} 题含有偷懒选项。")
         if not isinstance(item["answer"], int) or not (0 <= item["answer"] < 4):
             raise PackageError(f"第 {index} 题答案索引不正确。")
-        if len(str(item["question"]).strip()) < 12:
+        if len(str(item["question"]).strip()) < 18:
             raise PackageError(f"第 {index} 题题干太短。")
-        if min(len(str(choice).strip()) for choice in choices) < 6:
+        if min(len(str(choice).strip()) for choice in choices) < 8:
             raise PackageError(f"第 {index} 题存在过短选项，容易显得幼稚。")
-        if len(str(item["explain"]).strip()) < 24:
+        if len(str(item["explain"]).strip()) < 36:
             raise PackageError(f"第 {index} 题解析太短，必须说明经文大意。")
 
     data["quiz"] = quiz
