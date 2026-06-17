@@ -52,13 +52,15 @@ Default output structure:
 The entry page must include:
 
 - `<meta charset="utf-8">`
-- a clear title with the passage range
+- a clear title with only the passage range, such as `创世记1章到3章`
 - a short content-focused sentence about the passage
-- a logical reading-flow index, usually `读经前 -> 讲道角度 -> 读经后 -> 互动题`
-- a button or prominent link: `打开完整查经包`, linking to the HTML study package, not `.md`
-- a button or prominent link: `打开互动选择题`
-- a button or prominent link: `查看来源` when a separate sources page exists
-- a button or prominent link: `查看历史摘要` when a separate history summary page exists
+- exactly four prominent clickable cards: `读经前`, `讲道角度`, `读经后`, and `互动题`
+- `读经前` links to the study HTML pre-reading anchor, such as `genesis-1-3-study-package.html#source`
+- `讲道角度` links to the sermon angle anchor, such as `genesis-1-3-study-package.html#sermon`
+- `读经后` links to the post-reading summary anchor, such as `genesis-1-3-study-package.html#summary`
+- `互动题` links to the interactive quiz HTML
+
+The entry page must not show top action buttons or labels such as `打开完整查经包`, `打开互动选择题`, `查看来源`, or `查看历史摘要`. Source and history remain available inside the study content page and its index.
 
 All Chinese HTML pages must include `<meta charset="utf-8">`, including entry pages, study package pages, quiz pages, sources pages, and history-summary pages. This prevents Safari from opening Chinese as garbled text.
 
@@ -73,7 +75,7 @@ Finished product pages must be content-first:
 
 The study package HTML body must use this content order:
 
-1. 标题：经文范围 + 完整查经包
+1. 标题：经文范围
 2. 经文范围与来源
 3. 历史背景
 4. 上下文

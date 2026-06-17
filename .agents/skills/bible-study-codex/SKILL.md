@@ -25,8 +25,9 @@ Load only the reference needed for the current task:
 - Treat a passage range as enough input. Normalize the range, retrieve CUV online by default, and ask for pasted text only when lookup fails or the translation source is unclear.
 - When the user gives a passage and no narrower task, produce the default full study package: CUV text reference, pre-reading background, context, key places, needed route/geography diagram, David Pawson or specified-pastor sermon angle, reading focus, post-reading summary, cross-references, interactive HTML quiz, and short history summary.
 - For a full study package, first write structured package data to `outputs/<passage-slug>-package.json`, then render the pages with the bundled renderer. In the repository, run `python3 scripts/render-package.py --data outputs/<passage-slug>-package.json --out outputs --open`. Do not hand-write finished HTML when the renderer is available.
-- A full study package must include a user-openable HTML entry page. Do not deliver only scattered Markdown/HTML file paths. Create an entry page such as `outputs/open.html` or `outputs/<passage>/index.html` with `<meta charset="utf-8">`, a clear title, logical reading-flow index, and buttons for the full package, interactive quiz, and sources/history summary when available.
-- The full study package body must also have an HTML version such as `genesis-1-3-study-package.html`. Markdown may exist as backup, but the entry page's `打开完整查经包` button must link to the HTML page, not to `.md`.
+- A full study package must include a user-openable HTML entry page. Do not deliver only scattered Markdown/HTML file paths. Create an entry page such as `outputs/open.html` or `outputs/<passage>/index.html` with `<meta charset="utf-8">`, the passage range as the title, and four clickable cards: `读经前`, `讲道角度`, `读经后`, and `互动题`.
+- Do not put top action buttons on the entry page. Do not show labels such as `打开完整查经包`, `打开互动选择题`, `查看来源`, or `查看历史摘要` on the entry page. Fold those destinations into the four cards.
+- The full study package body must also have an HTML version such as `genesis-1-3-study-package.html`. Markdown may exist as backup, but the entry page cards must link to HTML pages or HTML anchors, not to `.md`.
 - All Chinese HTML pages must include `<meta charset="utf-8">` to prevent garbled text in Safari.
 - Finished pages should feel like a polished, Apple-inspired reading product: restrained colors, strong hierarchy, subtle light/shadow, tasteful motion, and a clear index. Do not rely on dense prose alone.
 - Product pages must be content-first. Put `历史背景` inside the study package body near the top, right after `经文范围与来源`. Do not put historical background only in README, notes, history summary, or external links.
@@ -46,7 +47,7 @@ Load only the reference needed for the current task:
 
 Choose the closest mode from the user's request:
 
-1. **默认完整查经包**: passage range normalization, CUV lookup, background, context, key places, route/geography diagram when needed, David Pawson or specified-pastor angle, reading focus, post-reading summary, cross-references, HTML quiz, short history summary.
+1. **默认查经内容**: passage range normalization, CUV lookup, background, context, key places, route/geography diagram when needed, David Pawson or specified-pastor angle, reading focus, post-reading summary, cross-references, HTML quiz, short history summary.
 2. **读经前背景**: passage text reference, historical setting, context, key people/places, geography or route, questions to watch while reading.
 3. **读经后总结与互动题**: plain summary, key observations, misunderstandings to avoid, cross-references, interactive HTML multiple-choice quiz with answer explanations.
 4. **指定牧师讲道整理**: verify the pastor identity, find sermons on the same passage, summarize only readable/watchable material, or provide links without inventing.

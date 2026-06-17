@@ -48,7 +48,7 @@ bash scripts/install.sh
 
 ```text
 请帮我安装并试用这个 Codex 查经 Skill：https://github.com/2715000591-sys/bible-study-codex
-安装后先用项目自带的创世记1章到3章示例跑固定生成器，并打开入口页让我看效果。以后我给你经文范围时，请用 $bible-study-codex 生成完整查经包。
+安装后先用项目自带的创世记1章到3章示例跑固定生成器，并打开入口页让我看效果。以后我给你经文范围时，请用 $bible-study-codex 生成查经内容。
 ```
 
 如果新 Codex 不知道怎么做，把下面这个严格版也给它：
@@ -59,7 +59,7 @@ bash scripts/install.sh
 2. 进入项目文件夹，运行 bash scripts/install.sh
 3. 先运行 python3 scripts/render-package.py --data examples/genesis-1-3-package.json --out outputs --open
 4. 确认浏览器打开 outputs/open.html
-5. 再用 $bible-study-codex 测试“创世记1章到3章”的完整查经包
+5. 再用 $bible-study-codex 测试“创世记1章到3章”的查经内容
 注意：安装脚本只在首次安装或项目更新后运行，平时查经不要重复安装。
 ```
 
@@ -80,17 +80,17 @@ python3 scripts/render-package.py --data examples/genesis-1-3-package.json --out
 再测试 Skill：
 
 ```text
-用 $bible-study-codex 帮我做创世记1章到3章的完整查经包。
+用 $bible-study-codex 帮我做创世记1章到3章的查经内容。
 ```
 
-正常结果是浏览器自动打开 `outputs/open.html`，里面有“打开完整查经包”和“打开互动选择题”按钮。
+正常结果是浏览器自动打开 `outputs/open.html`。入口页上有四个可点击卡片：`读经前`、`讲道角度`、`读经后`、`互动题`。
 
 ## 三句话怎么用
 
 日常最常用的是这三句：
 
 ```text
-用 $bible-study-codex 帮我做创世记1章到3章的完整查经包。
+用 $bible-study-codex 帮我做创世记1章到3章的查经内容。
 ```
 
 ```text
@@ -109,13 +109,13 @@ python3 scripts/render-package.py --data examples/genesis-1-3-package.json --out
 
 ## 常用方式
 
-默认完整查经包：
+默认查经内容：
 
 ```text
-用 $bible-study-codex 帮我做创世记1章到3章的完整查经包。
+用 $bible-study-codex 帮我做创世记1章到3章的查经内容。
 ```
 
-生成完整查经包后，Codex 应该交付一个正常 HTML 入口页，比如 `outputs/open.html` 或 `outputs/index.html`。入口页像普通网页一样打开，里面有清楚的阅读流程和按钮，可以进入完整查经包、互动选择题、来源或历史摘要。
+生成查经内容后，Codex 应该交付一个正常 HTML 入口页，比如 `outputs/open.html` 或 `outputs/index.html`。入口页像普通网页一样打开，标题只显示经文范围，下面四个卡片分别进入 `读经前`、`讲道角度`、`读经后`、`互动题`。
 
 稳定生成方式：先生成结构化数据，再运行固定生成器。新 Codex 应该优先这样做：
 
@@ -176,39 +176,39 @@ David Pawson 讲道角度：
 - 默认生成 HTML 互动选择题，不默认生成 Markdown 试卷。
 - 互动题只做选择题，每次 7-10 题。题目不要背书、不要抠字眼，难度目标是认真读一遍能答对约 70%。
 - 如果经文本身涉及迁徙、战争、路线或明显地理移动，要主动生成示意图，并标明是示意图。
-- `history/` 默认不上传 GitHub，也不自动备份。默认只保存短摘要，不保存完整查经包。
-- 测试产品必须有正常 HTML 入口页。完整查经包不能只交付散落文件、复杂路径或 `.md` 文件。
+- `history/` 默认不上传 GitHub，也不自动备份。默认只保存短摘要，不保存完整查经内容。
+- 测试产品必须有正常 HTML 入口页。查经内容不能只交付散落文件、复杂路径或 `.md` 文件。
 - 入口页必须写 `<meta charset="utf-8">`，避免 Safari 打开中文时乱码。
-- 入口页标题格式：`经文范围 + 完整查经包`。
-- 入口页要有清楚按钮：`打开完整查经包`、`打开互动选择题`、`查看来源`，以及有单独历史摘要时的 `查看历史摘要`。
-- 入口页和完整查经包要有更像产品的索引：读经前、讲道角度、读经后、互动题、来源和历史摘要要分清楚。
+- 入口页标题只写经文范围，比如 `创世记1章到3章`，不要写“完整查经包”。
+- 入口页只保留四个可点击卡片：`读经前`、`讲道角度`、`读经后`、`互动题`。不要在顶部再放 `打开完整查经包`、`打开互动选择题`、`查看来源`、`查看历史摘要` 这些按钮。
+- 入口页和查经内容页要有更像产品的索引：读经前、讲道角度、读经后、互动题、来源和历史摘要要分清楚。
 - 成品页面要有克制的苹果风格：清楚层级、舒适留白、光影、阴影和适度动效；不能只靠一大堆文字堆起来。
-- 完整查经包优先使用固定生成器：先写 `outputs/<passage-slug>-package.json`，再运行 `python3 scripts/render-package.py --data outputs/<passage-slug>-package.json --out outputs --open`。
+- 查经内容优先使用固定生成器：先写 `outputs/<passage-slug>-package.json`，再运行 `python3 scripts/render-package.py --data outputs/<passage-slug>-package.json --out outputs --open`。
 - 互动题质量要经过脚本检查：7-10题、每题4个选项、至少4种题型层级、不能用偷懒选项，解析必须讲清经文大意。
 - 来源要写进数据文件里的 `sources`，每条来源标明标题、链接、说明和是否已核对。
-- `打开完整查经包` 必须链接到 HTML 页面，例如 `genesis-1-3-study-package.html`，不要链接到 `.md`。
-- 完整查经包本体也要生成 HTML 版本。Markdown 可以保留作备份或给懂的人看，但不能作为默认打开入口。
+- 四个卡片必须链接到 HTML 页面或 HTML 锚点，不要链接到 `.md`。
+- 查经内容页必须生成 HTML 版本。Markdown 可以保留作备份或给懂的人看，但不能作为默认打开入口。
 - 成品页面只呈现内容价值，不写电脑使用教学，不解释文件路径、Markdown、HTML、编码或“怎么打开文件”。
-- 历史背景必须放在完整查经包正文靠前位置，紧跟在“经文范围与来源”之后，不能只放在 README、历史摘要、来源页或外部链接里。
+- 历史背景必须放在查经内容正文靠前位置，紧跟在“经文范围与来源”之后，不能只放在 README、历史摘要、来源页或外部链接里。
 - 如果环境允许，生成后要自动打开入口页。macOS 优先用 Safari：`open -a Safari outputs/open.html`；其他电脑用系统默认浏览器。
 - 最终回复先说入口页已经打开，再给可点击入口链接。如果确实用 Safari 打开，就说“我已经用 Safari 打开入口页。”
 - 如果浏览器打不开，就用最简单的话告诉用户：`请打开 outputs/open.html，这就是入口页。`
 
 ## 交付体验
 
-完整查经包默认应该输出到 `outputs/`，并提供一个入口页：
+查经内容默认应该输出到 `outputs/`，并提供一个入口页：
 
 ```text
 outputs/
 ├── open.html                         # 用户先打开这个
 ├── genesis-1-3-package.json          # 结构化数据
-├── genesis-1-3-study-package.html    # 完整查经包 HTML
+├── genesis-1-3-study-package.html    # 查经内容 HTML
 ├── genesis-1-3-quiz.html             # 互动选择题 HTML
 ├── genesis-1-3-sources.html          # 来源
 └── genesis-1-3-history-summary.html  # 历史短摘要
 ```
 
-用户正常只需要打开 `open.html`。互动题 HTML 是入口页里的一个按钮，不应该成为唯一交付物。
+用户正常只需要打开 `open.html`。互动题 HTML 是入口页里的一个卡片入口，不应该成为唯一交付物。
 
 所有中文网页都必须有：
 
@@ -216,10 +216,10 @@ outputs/
 <meta charset="utf-8">
 ```
 
-完整查经包正文结构固定为：
+查经内容正文结构固定为：
 
 ```text
-标题：经文范围 + 完整查经包
+标题：经文范围
 经文范围与来源
 历史背景
 上下文
@@ -236,8 +236,8 @@ David Pawson / 指定牧师讲道角度
 
 视觉和索引规则：
 
-- 入口页先呈现阅读流程，不做文件目录。
-- 完整查经包要有内容索引和锚点，能看出读经前、讲道角度、读经后和练习的顺序。
+- 入口页先呈现四个可点击流程卡片，不做文件目录。
+- 查经内容页要有内容索引和锚点，能看出读经前、讲道角度、读经后和练习的顺序。
 - 查经包正文必须直接呈现历史背景，而且位置靠前。
 - 页面可以有轻微动效、光影和阴影，但不要喧宾夺主。
 - 页面里不要写打开文件、编码、Markdown、HTML 这类说明。
@@ -268,7 +268,7 @@ python3 scripts/render-package.py --data examples/genesis-1-3-package.json --out
 
 私人查经记录请放在 `history/`。这个目录默认只保留说明文件，具体查经记录会被 Git 忽略，避免你把小组内容或个人感受误传到公开仓库。
 
-默认只保存短摘要，比如：日期、经文、本次重点、牧师讲道角度、小组错题集中在哪里、下次继续查的问题。完整查经包、完整讲道内容、完整互动题不默认保存。
+默认只保存短摘要，比如：日期、经文、本次重点、牧师讲道角度、小组错题集中在哪里、下次继续查的问题。完整查经内容、完整讲道内容、完整互动题不默认保存。
 
 如果将来想备份历史，可以自己复制到网盘或另建私有仓库。第一版不做自动备份。
 

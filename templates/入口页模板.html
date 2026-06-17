@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{PASSAGE}} 完整查经包</title>
+  <title>{{PASSAGE}}</title>
   <style>
     :root {
       --bg: #f7f8fb;
@@ -141,6 +141,7 @@
     }
 
     .step {
+      display: block;
       position: relative;
       overflow: hidden;
       min-height: 154px;
@@ -150,7 +151,16 @@
       background: var(--surface);
       box-shadow: var(--soft-shadow);
       backdrop-filter: blur(14px);
+      color: var(--ink);
+      text-decoration: none;
       animation: rise 520ms ease both;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+
+    .step:hover {
+      transform: translateY(-3px);
+      border-color: rgba(52, 87, 213, 0.30);
+      box-shadow: 0 18px 46px rgba(20, 30, 48, 0.11);
     }
 
     .step:nth-child(2) { animation-delay: 70ms; }
@@ -221,38 +231,31 @@
   <main class="page">
     <section class="hero" aria-label="查经包入口">
       <p class="eyebrow">阅读流程</p>
-      <h1>{{PASSAGE}} 完整查经包</h1>
+      <h1>{{PASSAGE}}</h1>
       <p class="lead">{{SUMMARY}}</p>
-
-      <nav class="actions" aria-label="查经包入口按钮">
-        <a class="button primary" href="{{STUDY_HTML}}">打开完整查经包</a>
-        <a class="button" href="{{QUIZ_HTML}}">打开互动选择题</a>
-        <a class="button" href="{{SOURCES_HTML}}">查看来源</a>
-        <a class="button" href="{{HISTORY_HTML}}">查看历史摘要</a>
-      </nav>
     </section>
 
     <section class="flow" aria-label="内容索引">
-      <article class="step">
+      <a class="step" href="{{STUDY_HTML}}#source">
         <span class="num">01</span>
         <h2>读经前</h2>
         <p>历史背景、上下文、重要人物与地理关系放在前面。</p>
-      </article>
-      <article class="step">
+      </a>
+      <a class="step" href="{{STUDY_HTML}}#sermon">
         <span class="num">02</span>
         <h2>讲道角度</h2>
         <p>整理 David Pawson 或指定牧师可核对的讲道方向。</p>
-      </article>
-      <article class="step">
+      </a>
+      <a class="step" href="{{STUDY_HTML}}#summary">
         <span class="num">03</span>
         <h2>读经后</h2>
         <p>短总结、前后文呼应、旧约或新约线索。</p>
-      </article>
-      <article class="step">
+      </a>
+      <a class="step" href="{{QUIZ_HTML}}">
         <span class="num">04</span>
         <h2>互动题</h2>
         <p>选择题、自动检查、错题解释经文大意。</p>
-      </article>
+      </a>
     </section>
   </main>
 </body>

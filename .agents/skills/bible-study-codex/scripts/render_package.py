@@ -171,7 +171,7 @@ def validate_package(data: dict[str, Any]) -> None:
 
     sources = [item for item in as_list(data.get("sources")) if isinstance(item, dict)]
     if not sources:
-        raise PackageError("完整查经包必须至少包含一个来源。")
+        raise PackageError("查经内容至少需要一个来源。")
     for idx, source in enumerate(sources, start=1):
         if not source.get("title") and not source.get("url"):
             raise PackageError(f"第 {idx} 个来源缺少标题或链接。")
@@ -310,6 +310,8 @@ def page_shell(title: str, body: str, extra_script: str = "") -> str:
     .button.primary, button.primary {{ border-color: rgba(23, 107, 107, 0.42); background: linear-gradient(135deg, #176b6b, #244ea8); color: #fff; }}
     .button:hover, button:hover {{ transform: translateY(-2px); border-color: rgba(52, 87, 213, 0.40); box-shadow: var(--soft-shadow); }}
     .flow {{ display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 18px; }}
+    .step {{ display: block; color: var(--ink); text-decoration: none; transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease; }}
+    .step:hover {{ transform: translateY(-3px); border-color: rgba(52, 87, 213, 0.30); box-shadow: 0 18px 46px rgba(20, 30, 48, 0.11); }}
     .layout {{ display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 18px; align-items: start; }}
     .index {{
       position: sticky;
@@ -413,32 +415,26 @@ def page_shell(title: str, body: str, extra_script: str = "") -> str:
 
 def render_entry(data: dict[str, Any], files: dict[str, str]) -> str:
     steps = [
-        ("01", "读经前", "历史背景、上下文、重要人物与地理关系放在前面。"),
-        ("02", "讲道角度", "整理 David Pawson 或指定牧师可核对的讲道方向。"),
-        ("03", "读经后", "短总结、前后文呼应、旧约或新约线索。"),
-        ("04", "互动题", "选择题、自动检查、错题解释经文大意。"),
+        ("01", "读经前", "历史背景、上下文、重要人物与地理关系。", f'{files["study"]}#source'),
+        ("02", "讲道角度", "David Pawson 或指定牧师可核对的讲道方向。", f'{files["study"]}#sermon'),
+        ("03", "读经后", "短总结、前后文呼应、旧约或新约线索。", f'{files["study"]}#summary'),
+        ("04", "互动题", "选择题、自动检查、错题解释经文大意。", files["quiz"]),
     ]
     flow = "\n".join(
-        f'<article class="step"><span class="stage">{num}</span><h2>{esc(title)}</h2><p>{esc(text)}</p></article>'
-        for num, title, text in steps
+        f'<a class="step" href="{esc(href)}"><span class="stage">{num}</span><h2>{esc(title)}</h2><p>{esc(text)}</p></a>'
+        for num, title, text, href in steps
     )
     body = f"""
   <main class="page">
-    <section class="hero" aria-label="查经包入口">
+    <section class="hero" aria-label="查经入口">
       <p class="eyebrow">阅读流程</p>
-      <h1>{esc(data["passage"])} 完整查经包</h1>
+      <h1>{esc(data["passage"])}</h1>
       <p class="lead">{esc(data["summary"])}</p>
-      <nav class="actions" aria-label="查经包入口按钮">
-        <a class="button primary" href="{esc(files["study"])}">打开完整查经包</a>
-        <a class="button" href="{esc(files["quiz"])}">打开互动选择题</a>
-        <a class="button" href="{esc(files["sources"])}">查看来源</a>
-        <a class="button" href="{esc(files["history"])}">查看历史摘要</a>
-      </nav>
     </section>
-    <section class="flow" aria-label="内容索引">{flow}</section>
+    <section class="flow" aria-label="四个查经入口">{flow}</section>
   </main>
 """
-    return page_shell(f'{data["passage"]} 完整查经包', body)
+    return page_shell(data["passage"], body)
 
 
 def section_value(data: dict[str, Any], name: str) -> Any:
@@ -463,8 +459,8 @@ def render_study(data: dict[str, Any], files: dict[str, str]) -> str:
         (
             "quiz",
             "练习",
-            "互动选择题入口",
-            f'<p>{esc(data.get("quiz_intro") or "题目围绕经文大意、结构、关系和应用判断。")}</p><p><a class="button primary" href="{esc(files["quiz"])}">打开互动选择题</a></p>',
+            "互动题",
+            f'<p>{esc(data.get("quiz_intro") or "题目围绕经文大意、结构、关系和应用判断。")}</p><p><a class="button primary" href="{esc(files["quiz"])}">开始互动题</a></p>',
         ),
         ("sources", "核对", "来源", sources_block(data.get("sources"))),
         ("history", "留存", "历史短摘要", history_block(data.get("history_summary"))),
@@ -480,14 +476,11 @@ def render_study(data: dict[str, Any], files: dict[str, str]) -> str:
     body = f"""
   <main class="page">
     <header class="hero">
-      <p class="eyebrow">完整查经包</p>
-      <h1>{esc(data["passage"])} 完整查经包</h1>
+      <p class="eyebrow">查经内容</p>
+      <h1>{esc(data["passage"])}</h1>
       <p class="lead">{esc(data["summary"])}</p>
       <nav class="actions" aria-label="查经包主要入口">
         <a class="button" href="{esc(files["entry"])}">返回入口页</a>
-        <a class="button primary" href="{esc(files["quiz"])}">打开互动选择题</a>
-        <a class="button" href="{esc(files["sources"])}">查看来源</a>
-        <a class="button" href="{esc(files["history"])}">查看历史摘要</a>
       </nav>
     </header>
     <div class="layout">
@@ -520,7 +513,7 @@ def render_study(data: dict[str, Any], files: dict[str, str]) -> str:
     });
   </script>
 """
-    return page_shell(f'{data["passage"]} 完整查经包', body, script)
+    return page_shell(f'{data["passage"]} 查经内容', body, script)
 
 
 def render_quiz(data: dict[str, Any], files: dict[str, str]) -> str:
@@ -533,7 +526,7 @@ def render_quiz(data: dict[str, Any], files: dict[str, str]) -> str:
       <p class="lead">只做选择题，不考背诵。点“检查答案”后会显示得分、错题、正确答案和经文大意解析。</p>
       <nav class="actions" aria-label="返回查经包">
         <a class="button" href="{esc(files["entry"])}">返回入口页</a>
-        <a class="button" href="{esc(files["study"])}">打开完整查经包</a>
+        <a class="button" href="{esc(files["study"])}">查看查经内容</a>
       </nav>
     </header>
     <section class="toolbar" aria-label="测验工具栏">
@@ -649,8 +642,8 @@ def render_sources(data: dict[str, Any], files: dict[str, str]) -> str:
       <h1>{esc(data["passage"])} 来源</h1>
       <nav class="actions" aria-label="辅助页面导航">
         <a class="button" href="{esc(files["entry"])}">返回入口页</a>
-        <a class="button" href="{esc(files["study"])}">打开完整查经包</a>
-        <a class="button" href="{esc(files["quiz"])}">打开互动选择题</a>
+        <a class="button" href="{esc(files["study"])}">查看查经内容</a>
+        <a class="button" href="{esc(files["quiz"])}">开始互动题</a>
       </nav>
     </header>
     <section class="card visible"><h2>来源</h2>{sources_block(data.get("sources"))}</section>
@@ -667,8 +660,8 @@ def render_history(data: dict[str, Any], files: dict[str, str]) -> str:
       <h1>{esc(data["passage"])} 历史短摘要</h1>
       <nav class="actions" aria-label="辅助页面导航">
         <a class="button" href="{esc(files["entry"])}">返回入口页</a>
-        <a class="button" href="{esc(files["study"])}">打开完整查经包</a>
-        <a class="button" href="{esc(files["quiz"])}">打开互动选择题</a>
+        <a class="button" href="{esc(files["study"])}">查看查经内容</a>
+        <a class="button" href="{esc(files["quiz"])}">开始互动题</a>
       </nav>
     </header>
     <section class="card visible">{history_block(data.get("history_summary"))}</section>

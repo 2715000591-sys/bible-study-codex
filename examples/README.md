@@ -8,7 +8,7 @@
 
 ```text
 请帮我安装并试用这个 Codex 查经 Skill：https://github.com/2715000591-sys/bible-study-codex
-安装后先用项目自带的创世记1章到3章示例跑固定生成器，并打开入口页让我看效果。以后我给你经文范围时，请用 $bible-study-codex 生成完整查经包。
+安装后先用项目自带的创世记1章到3章示例跑固定生成器，并打开入口页让我看效果。以后我给你经文范围时，请用 $bible-study-codex 生成查经内容。
 ```
 
 严格版：
@@ -19,20 +19,20 @@
 2. 进入项目文件夹，运行 bash scripts/install.sh
 3. 先运行 python3 scripts/render-package.py --data examples/genesis-1-3-package.json --out outputs --open
 4. 确认浏览器打开 outputs/open.html
-5. 再用 $bible-study-codex 测试“创世记1章到3章”的完整查经包
+5. 再用 $bible-study-codex 测试“创世记1章到3章”的查经内容
 注意：安装脚本只在首次安装或项目更新后运行，平时查经不要重复安装。
 ```
 
-## 默认完整查经包
+## 默认查经内容
 
 ```text
-用 $bible-study-codex 帮我做创世记1章到3章的完整查经包。
+用 $bible-study-codex 帮我做创世记1章到3章的查经内容。
 ```
 
 更严格一点：
 
 ```text
-用 $bible-study-codex 帮我做创世记1章到3章的完整查经包。请自动查 CUV，联网核对历史、地理和 David Pawson 中文讲道资源。生成后请用固定生成器打开入口页，不要只给我文件路径。
+用 $bible-study-codex 帮我做创世记1章到3章的查经内容。请自动查 CUV，联网核对历史、地理和 David Pawson 中文讲道资源。生成后请用固定生成器打开入口页，不要只给我文件路径。
 ```
 
 ## 读经前

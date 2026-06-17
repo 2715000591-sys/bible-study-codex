@@ -28,6 +28,16 @@ if grep -Eq 'href="[^"]+\.md"' "$tmp_render/open.html"; then
   echo "生成器入口页不能默认链接到 Markdown"
   exit 1
 fi
+if grep -Eq '打开完整查经包|打开互动选择题|查看来源|查看历史摘要|完整查经包' "$tmp_render/open.html"; then
+  echo "生成器入口页仍包含旧按钮或旧标题"
+  exit 1
+fi
+for target in 'genesis-1-3-study-package.html#source' 'genesis-1-3-study-package.html#sermon' 'genesis-1-3-study-package.html#summary' 'genesis-1-3-quiz.html'; do
+  if ! grep -q "$target" "$tmp_render/open.html"; then
+    echo "生成器入口页缺少四卡片入口：$target"
+    exit 1
+  fi
+done
 if ! grep -q '内容索引' "$tmp_render/genesis-1-3-study-package.html"; then
   echo "生成器输出缺少内容索引"
   exit 1
@@ -59,10 +69,16 @@ while IFS= read -r html; do
 done < <(find templates examples outputs "$tmp_render" -type f -name '*.html' 2>/dev/null | sort)
 
 if [[ -f outputs/open.html ]]; then
-  if ! grep -q '打开完整查经包' outputs/open.html || ! grep -q '打开互动选择题' outputs/open.html; then
-    echo "入口页缺少必要按钮：outputs/open.html"
+  if grep -Eq '打开完整查经包|打开互动选择题|查看来源|查看历史摘要|完整查经包' outputs/open.html; then
+    echo "入口页仍包含旧按钮或旧标题：outputs/open.html"
     exit 1
   fi
+  for target in 'genesis-1-3-study-package.html#source' 'genesis-1-3-study-package.html#sermon' 'genesis-1-3-study-package.html#summary' 'genesis-1-3-quiz.html'; do
+    if ! grep -q "$target" outputs/open.html; then
+      echo "入口页缺少四卡片入口：$target"
+      exit 1
+    fi
+  done
   if grep -Eq 'href="[^"]+\.md"' outputs/open.html; then
     echo "入口页不能默认链接到 Markdown：outputs/open.html"
     exit 1
@@ -71,15 +87,20 @@ fi
 
 if [[ -f outputs/genesis-1-3-study-package.html ]]; then
   if ! grep -q '内容索引' outputs/genesis-1-3-study-package.html; then
-    echo "完整查经包缺少内容索引：outputs/genesis-1-3-study-package.html"
+    echo "查经内容页缺少内容索引：outputs/genesis-1-3-study-package.html"
     exit 1
   fi
   source_line="$(grep -n '<h2>经文范围与来源</h2>' outputs/genesis-1-3-study-package.html | head -n 1 | cut -d: -f1 || true)"
   background_line="$(grep -n '<h2>历史背景</h2>' outputs/genesis-1-3-study-package.html | head -n 1 | cut -d: -f1 || true)"
   if [[ -z "$source_line" || -z "$background_line" || "$background_line" -le "$source_line" || $((background_line - source_line)) -gt 80 ]]; then
-    echo "历史背景必须在完整查经包正文靠前位置"
+    echo "历史背景必须在查经内容正文靠前位置"
     exit 1
   fi
+fi
+
+if find outputs -type f -name '*.html' -print0 2>/dev/null | xargs -0 grep -q '完整查经包'; then
+  echo "成品页面不应再显示“完整查经包”"
+  exit 1
 fi
 
 echo "5/5 检查 Skill 格式"

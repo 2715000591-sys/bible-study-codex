@@ -86,4 +86,4 @@ The renderer generates:
 - `outputs/<slug>-sources.html`
 - `outputs/<slug>-history-summary.html`
 
-The entry page is always the normal user-facing starting point.
+The entry page is always the normal user-facing starting point. It should show the passage title and four clickable cards: `读经前`, `讲道角度`, `读经后`, and `互动题`. Do not put separate top buttons for full package, quiz, sources, or history on the entry page.
