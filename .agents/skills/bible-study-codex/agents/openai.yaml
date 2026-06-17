@@ -1,6 +1,6 @@
 interface:
   display_name: "Codex 查经助手"
   short_description: "查经背景、考题、讲道整理与短提纲"
-  default_prompt: "Use $bible-study-codex to prepare a concise Bible study workflow for a passage."
+  default_prompt: "用 $bible-study-codex 帮我做一段经文的完整查经包，并打开入口页。"
 policy:
   allow_implicit_invocation: true

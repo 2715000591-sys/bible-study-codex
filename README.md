@@ -44,14 +44,26 @@ bash scripts/install.sh
 
 ## 给新 Codex 的一句话
 
-把下面这句话给一个完全不知道本项目的新 Codex。正常人这样说就可以：
+把下面这句话给一个完全不知道本项目的新 Codex。最短版这样说就够了：
 
 ```text
-帮我安装并试用这个 Codex 查经 Skill：https://github.com/2715000591-sys/bible-study-codex
-请你打开这个 GitHub 链接，按 README 把项目下载到本地，运行安装脚本，然后用固定生成器测试“创世记1章到3章”的完整查经包。测试完整查经包时，要先生成或使用 outputs/<passage-slug>-package.json，再运行 python3 scripts/render-package.py --data outputs/<passage-slug>-package.json --out outputs --open。这个 Skill 只需要第一次安装，平时使用不要重复安装。
+请帮我安装并试用这个 Codex 查经 Skill：https://github.com/2715000591-sys/bible-study-codex
+安装后先用项目自带的创世记1章到3章示例跑固定生成器，并打开入口页让我看效果。以后我给你经文范围时，请用 $bible-study-codex 生成完整查经包。
 ```
 
-如果你就是正在执行这句话的 Codex，请按这个顺序做：
+如果新 Codex 不知道怎么做，把下面这个严格版也给它：
+
+```text
+请按顺序做：
+1. 下载项目：https://github.com/2715000591-sys/bible-study-codex
+2. 进入项目文件夹，运行 bash scripts/install.sh
+3. 先运行 python3 scripts/render-package.py --data examples/genesis-1-3-package.json --out outputs --open
+4. 确认浏览器打开 outputs/open.html
+5. 再用 $bible-study-codex 测试“创世记1章到3章”的完整查经包
+注意：安装脚本只在首次安装或项目更新后运行，平时查经不要重复安装。
+```
+
+如果你就是正在执行这些话的 Codex，请按这个顺序做：
 
 ```bash
 git clone https://github.com/2715000591-sys/bible-study-codex.git
@@ -59,19 +71,41 @@ cd bible-study-codex
 bash scripts/install.sh
 ```
 
-安装后重启或刷新 Codex，再测试：
-
-```text
-用 $bible-study-codex 帮我做创世记1章到3章的完整查经包。
-```
-
-如果只是先确认固定生成器能正常打开同款页面，可以运行：
+安装后重启或刷新 Codex。先测试固定生成器：
 
 ```bash
 python3 scripts/render-package.py --data examples/genesis-1-3-package.json --out outputs --open
 ```
 
+再测试 Skill：
+
+```text
+用 $bible-study-codex 帮我做创世记1章到3章的完整查经包。
+```
+
 正常结果是浏览器自动打开 `outputs/open.html`，里面有“打开完整查经包”和“打开互动选择题”按钮。
+
+## 三句话怎么用
+
+日常最常用的是这三句：
+
+```text
+用 $bible-study-codex 帮我做创世记1章到3章的完整查经包。
+```
+
+```text
+用 $bible-study-codex 帮我做约翰福音3章的读经前背景。
+```
+
+```text
+用 $bible-study-codex 根据罗马书8:1-17生成互动选择题，7到10题，只要选择题，答完要能检查答案和看解析。
+```
+
+如果你担心 AI 编内容，就加一句：
+
+```text
+历史、地理和讲道信息请联网核对；查不到就写需要人工确认，不要硬编。
+```
 
 ## 常用方式
 
